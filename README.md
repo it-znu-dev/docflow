@@ -10,11 +10,15 @@
 - [jQuery File Upload 9.9.2](https://blueimp.github.io/jQuery-File-Upload/)
 - [prettyPhoto 3.1.4](http://www.no-margin-for-errors.com/projects/prettyphoto-jquery-lightbox-clone/)
 
-### Особливості структури
+### Для встановлення ще потрібно
+
+Активи css/js файлів, що створюються автоматично, надходять в директорію assets
+```
+assets/
+```
 
 Назва БД, користувач, пароль підключення до БД дістаються із файлу 
 protected/config/db.txt
-
 ```
 protected/
 ├── config/
@@ -23,8 +27,21 @@ protected/
 
 Пароль до ел. пошти it.znu.edu@gmail.com дістається із файлу 
 protected/gmail_password.txt
-
 ```
 protected/
 ├── gmail_password.txt
+```
+
+У unix та linux-системах директорії assets, protected/runtime повинні бути доступні для запису
+```
+assets/
+protected/
+├── runtime/
+```
+
+В параметрі 'docPath' (main.php) вказується абсолютний шлях до місця збереження документів
+```
+protected/
+├── config/
+│   ├── main.php
 ```
