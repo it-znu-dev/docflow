@@ -1,0 +1,57 @@
+  TABLE.card{
+    border-collapse: collapse;
+    margin: 0px auto;
+    width: 7.25in;
+    border: 3px solid black;
+    border-left-width: 0px;
+    border-right-width: 0px;
+    font-family: 'Times New Roman';
+  }
+  
+  td {
+    font-size: 14pt;
+  }
+  
+  TD.common {
+    border: 3px solid black;
+    border-left-width: 0px;
+    border-right-width: 3px;
+  }
+  TD.half{
+    width: 50%;
+  }
+  TD.last {
+    border-right-width: 0px !important;
+  }
+  
+  div.slabel {
+    float: right;
+    font-size: 11pt;
+  }
+
+  .header-nums {
+    width: 4.7in; 
+    margin: 0px auto; 
+    font-size: 10pt; 
+    font-weight: bold;
+  }
+  
+  tr.indexes {
+    height: 80px;
+    vertical-align: middle;
+  }
+  
+  td.Summary {
+    height: 120px;
+    vertical-align: bottom;
+  }
+  
+  tr.Resolution {
+    height: 80px;
+    vertical-align: bottom;
+  }
+  
+  tr.ControlMarks {
+    height: 100px;
+    vertical-align: bottom;
+  }

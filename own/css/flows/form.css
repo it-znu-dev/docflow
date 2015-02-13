@@ -1,0 +1,7 @@
+.btn-margin {
+  margin: 5px;
+}
+
+.DepartmentName_comment, .CtrId, .DocumentInfo_comment {
+  display: none;
+}

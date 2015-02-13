@@ -1,0 +1,18 @@
+.DepartmentName_comment, .CtrId, #_AddText {
+  display: none;
+}
+
+._selector{
+  font-size: 10pt !important;
+}
+
+.dfheader {
+  background-color: rgba(255,255,215,0.5);
+  margin-bottom: 3px;
+}
+
+#_FoundItemsArea, #_AddedItemsArea{
+  max-height: 200px;
+  overflow: auto;
+}
+ 

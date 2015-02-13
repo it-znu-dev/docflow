@@ -1,0 +1,88 @@
+  div.files table.table-hover tbody tr:hover {background: #FFFFAA;}
+  
+  div.files table th {
+    word-wrap: break-word;
+    word-break: break-all;
+  }
+  div.files table th {font-size: 9pt; padding: 2px;}
+  div.files table td {font-size: 9pt; padding: 2px;}
+  div.files table td ul {padding-left: 15px;}
+  
+  div.files table tbody tr td button {
+    margin-top: 5px;
+  }
+  
+  div.files table tbody tr td div.control-actions {
+    display: block;
+  }
+  
+  div.files table thead tr.filters td input {
+    width: 95%;
+    height: 20px;
+    font-size: 8pt;
+  }
+  
+  div.files table thead tr.filters td div span {
+    height: 10px;
+    font-size: 8pt;
+  }
+  
+  div.files table thead tr.filters td select {
+    width: 95%;
+    height: 20px;
+    font-size: 8pt;
+  }
+  
+  input.small{
+    width: 95% !important;
+    height: 20px !important;
+    font-size: 8pt !important;
+  }
+  
+  select.small{
+    width: 95% !important;
+    height: 20px !important;
+    font-size: 8pt !important;
+  }
+  
+  textarea.small{
+    font-size: 8pt;
+  }
+  
+  div.files_pager div{
+    text-align: right;
+  }
+  
+  .dblock {
+    display: block;
+  }
+  
+  #datepicker {
+    text-align: center;
+  }
+  
+  .tb-datarange{
+    table-layout: fixed;
+    width: 200px;
+    margin: 0px auto;
+  }
+  
+  .tb-datarange > span{
+    width: 20px !important;
+  }
+
+  div.files table {table-layout:fixed; width:870px; margin: 0px auto;}
+  div.files table th:nth-of-type(1) {width:50px;}
+  div.files table th:nth-of-type(2) {width:100px;}
+  div.files table th:nth-of-type(3) {width:200px;}
+  div.files table th:nth-of-type(4) {width:100px;}
+  div.files table th:nth-of-type(5) {width:70px;}
+  div.files table th:nth-of-type(6) {width:200px;}
+  div.files table th:nth-of-type(7) {width:150px;}
+  div.files_pager {
+    width:870px; margin: 0px auto;
+  }
+  
+  iframe html body img {
+   width: 100%; 
+  }

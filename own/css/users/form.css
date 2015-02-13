@@ -1,0 +1,12 @@
+.DepartmentName_comment, .CtrId, #_AddText, #_AddText1, .name_comment {
+  display: none;
+}
+
+.dept_selector, .role_selector{
+  font-size: 10pt !important;
+}
+
+.dfheader {
+  background-color: rgba(255,255,215,0.5);
+  margin-bottom: 3px;
+}

@@ -1,0 +1,50 @@
+  div.doctypes table.table-hover tbody tr:hover {background: #FFFFAA;}
+  
+  div.doctypes table th {
+    word-wrap: break-word;
+    word-break: break-all;
+  }
+  div.doctypes table th {font-size: 9pt; padding: 2px;}
+  div.doctypes table td {font-size: 9pt; padding: 2px;}
+  div.doctypes table td ul {padding-left: 15px;}
+  
+  div.doctypes table tbody tr td button {
+    margin-top: 5px;
+  }
+  
+  div.doctypes table tbody tr td div.control-actions {
+    display: none;
+  }
+  
+  div.doctypes table thead tr.filters td input {
+    width: 95%;
+    height: 20px;
+    font-size: 8pt;
+  }
+  
+  div.doctypes table thead tr.filters td select {
+    width: 95%;
+    height: 20px;
+    font-size: 8pt;
+  }
+  
+  input.small{
+    width: 95% !important;
+    height: 20px;
+    font-size: 8pt;
+  }
+  
+  textarea.small{
+    font-size: 8pt;
+  }
+  
+  div.doctypes_pager div{
+    text-align: right;
+  }
+
+  div.doctypes table {table-layout:fixed; width:650px; margin: 0px auto;}
+  div.doctypes table th:nth-of-type(1) {width:50px;}
+  div.doctypes table th:nth-of-type(2) {width:600px;}
+  div.doctypes_pager {
+    width:650px; margin: 0px auto;
+  }

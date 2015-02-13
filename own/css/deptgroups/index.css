@@ -1,0 +1,51 @@
+  div.deptgroups table.table-hover tbody tr:hover {background: #FFFFAA;}
+  
+  div.deptgroups table th {
+    word-wrap: break-word;
+    word-break: break-all;
+  }
+  div.deptgroups table th {font-size: 9pt; padding: 2px;}
+  div.deptgroups table td {font-size: 9pt; padding: 2px;}
+  div.deptgroups table td ul {padding-left: 15px;}
+  
+  div.deptgroups table tbody tr td button {
+    margin-top: 5px;
+  }
+  
+  div.deptgroups table tbody tr td div.control-actions {
+    display: none;
+  }
+  
+  div.deptgroups table thead tr.filters td input {
+    width: 95%;
+    height: 20px;
+    font-size: 8pt;
+  }
+  
+  div.deptgroups table thead tr.filters td select {
+    width: 95%;
+    height: 20px;
+    font-size: 8pt;
+  }
+  
+  input.small{
+    width: 95% !important;
+    height: 20px;
+    font-size: 8pt;
+  }
+  
+  textarea.small{
+    font-size: 8pt;
+  }
+  
+  div.deptgroups_pager div{
+    text-align: right;
+  }
+
+  div.deptgroups table {table-layout:fixed; width:650px; margin: 0px auto;}
+  div.deptgroups table th:nth-of-type(1) {width:50px;}
+  div.deptgroups table th:nth-of-type(2) {width:250px;}
+  div.deptgroups table th:nth-of-type(3) {width:350px;}
+  div.deptgroups_pager {
+    width:650px; margin: 0px auto;
+  }

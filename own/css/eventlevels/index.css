@@ -1,0 +1,51 @@
+  div.eventlevels table.table-hover tbody tr:hover {background: #FFFFAA;}
+  
+  div.eventlevels table th {
+    word-wrap: break-word;
+    word-break: break-all;
+  }
+  div.eventlevels table th {font-size: 9pt; padding: 2px;}
+  div.eventlevels table td {font-size: 9pt; padding: 2px;}
+  div.eventlevels table td ul {padding-left: 15px;}
+  
+  div.eventlevels table tbody tr td button {
+    margin-top: 5px;
+  }
+  
+  div.eventlevels table tbody tr td div.control-actions {
+    display: none;
+  }
+  
+  div.eventlevels table thead tr.filters td input {
+    width: 95%;
+    height: 20px;
+    font-size: 8pt;
+  }
+  
+  div.eventlevels table thead tr.filters td select {
+    width: 95%;
+    height: 20px;
+    font-size: 8pt;
+  }
+  
+  input.small{
+    width: 95% !important;
+    height: 20px;
+    font-size: 8pt;
+  }
+  
+  textarea.small{
+    font-size: 8pt;
+  }
+  
+  div.eventlevels_pager div{
+    text-align: right;
+  }
+
+  div.eventlevels table {table-layout:fixed; width:500px; margin: 0px auto;}
+  div.eventlevels table th:nth-of-type(1) {width:50px;}
+  div.eventlevels table th:nth-of-type(2) {width:250px;}
+  div.eventlevels table th:nth-of-type(3) {width:150px;}
+  div.eventlevels_pager {
+    width:500px; margin: 0px auto;
+  }

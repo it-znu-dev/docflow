@@ -1,0 +1,51 @@
+  div.doccategories table.table-hover tbody tr:hover {background: #FFFFAA;}
+  
+  div.doccategories table th {
+    word-wrap: break-word;
+    word-break: break-all;
+  }
+  div.doccategories table th {font-size: 9pt; padding: 2px;}
+  div.doccategories table td {font-size: 9pt; padding: 2px;}
+  div.doccategories table td ul {padding-left: 15px;}
+  
+  div.doccategories table tbody tr td button {
+    margin-top: 5px;
+  }
+  
+  div.doccategories table tbody tr td div.control-actions {
+    display: none;
+  }
+  
+  div.doccategories table thead tr.filters td input {
+    width: 95%;
+    height: 20px;
+    font-size: 8pt;
+  }
+  
+  div.doccategories table thead tr.filters td select {
+    width: 95%;
+    height: 20px;
+    font-size: 8pt;
+  }
+  
+  input.small{
+    width: 95% !important;
+    height: 20px;
+    font-size: 8pt;
+  }
+  
+  textarea.small{
+    font-size: 8pt;
+  }
+  
+  div.doccategories_pager div{
+    text-align: right;
+  }
+
+  div.doccategories table {table-layout:fixed; width:650px; margin: 0px auto;}
+  div.doccategories table th:nth-of-type(1) {width:50px;}
+  div.doccategories table th:nth-of-type(2) {width:450px;}
+  div.doccategories table th:nth-of-type(3) {width:150px;}
+  div.doccategories_pager {
+    width:650px; margin: 0px auto;
+  }

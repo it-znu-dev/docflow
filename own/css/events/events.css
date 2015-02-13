@@ -1,0 +1,173 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 6 лют 2015, 13:47:38
+    Author     : synepolskyj_i_v
+*/
+
+select.input-medium {
+  width: 400px !important;
+}
+.label_dept {
+  overflow:hidden;
+  width: 50%;
+  margin-top: 2px;
+}
+
+#DateFields{
+  border: 1px solid grey;
+  margin-bottom: 5px;
+}
+#calendar_preview_block{
+  overflow: auto;
+  max-height: 400px;
+}
+
+#calendar_msg_block {
+  overflow: auto;
+  font-family: Verdana;
+  font-size: 7pt;
+  max-height: 400px;
+}
+
+#DateSmartField{
+  display: inline;
+}
+#StartTimeField{
+  display: inline;
+  width: 60px;
+}
+#FinishTimeField{
+  display: inline;
+  width: 60px;
+}
+.calendar_preview {
+  display: inline-table;
+  margin-left: 5px;
+  border-spacing: 3px;
+  border-collapse: separate;
+}
+.calendar_preview > tbody > tr > td{
+  height: 20px  !important;
+  padding-left: 2px;
+  padding-right: 6px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  text-align: center;
+  border-radius: 3px;
+  border: 1px solid rgba(192,192,192,0.5);
+  font-size: 8pt;
+}
+.calendar_preview > thead > tr > th{
+  margin: 0px;
+  padding: 0px;
+  border-radius: 3px;
+  border: 1px solid rgba(192,192,192,0.1);
+  font-size: 7pt;
+  text-align: center;
+}
+.calendar_preview > tbody > tr > td.passive{
+  color: #AAAAAA;
+}
+.calendar_preview > tbody > tr > td.extra_highlighted{
+  border: 1px solid blue;
+}
+.calendar_preview > tbody > tr > td.highlighted{
+  border: 1px solid red;
+}
+
+.CtrId {
+  display: none;
+  
+}
+
+.CtrName {
+  font-size: 10pt;
+}
+
+.NoFlow{
+  color: rgb(120,100,100);
+}
+
+.InvitedComment_comment {
+  height: 16px !important;
+  font-size: 8pt !important;
+  width: 20px !important;
+  padding: 1px !important;
+  margin-bottom: 0px !important;
+}
+
+.OrganizerComment_comment{
+  display:none;
+}
+
+.CtrSubBulletNoFlow {
+  color: rgb(255,0,0) !important;
+}
+.CtrSubBullet {
+  color: rgb(0,0,255);
+}
+.counter_circle{
+  height: 12px !important; 
+  width: 12px !important;
+  padding: 0px !important;
+  position: absolute !important; 
+  display: inline-block !important;
+  text-align: center !important;
+  font-family: Verdana !important;
+  /* font-weight: normal !important; */
+  color: white !important;
+  font-size: 7pt !important;
+  float: left !important;
+  margin-left: -2px;
+  margin-top: -3px;
+  background-color: rgba(255,255,0,0.5) !important;
+  color: black !important;
+}
+
+.label-college {
+  background-color: blue;
+}
+
+.label-science {
+  background-color: blue;
+}
+
+.label-city {
+  background-color: yellow;
+  color: black !important;
+}
+
+.label-faculty {
+  background-color: #eee;
+  color: black !important;
+}
+
+.label-vuz {
+  background-color: lightblue;
+  color: black !important;
+}
+
+.label-cult {
+  background-color: yellow;
+  color: black !important;
+}
+
+.label-important {
+  background-color: brown;
+  color: white !important;
+}
+
+.label-red {
+  background-color: grey;
+  color: white !important;
+}
+
+.dfheader{
+  font-size: 9pt;
+  margin-top: 5px;
+  margin-bottom: 0px !important;
+}
