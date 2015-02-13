@@ -176,7 +176,7 @@ $controller = $this;
             || data.originalFiles[0]['size'] > <?php echo intval(ini_get('upload_max_filesize')) * 1024 * 1024; ?>) {
               uploadErrors.push('Файл занадто великий.');
           }
-          if((uploadErrors.length === 0)
+          if((uploadErrors.length === 0) && (data.originalFiles[0]['size'] > 1024 * 1024 * 20)
             && !confirm("Ви намагаєтесь завантажити великий файл, доведеться зачекати. Згодні?")){
               uploadErrors.push('Завантаження скасовано.');
           }
