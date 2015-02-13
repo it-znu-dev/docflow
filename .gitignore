@@ -1,2 +1,9 @@
-/nbproject
+assets/
+/nbproject/private/
+!/framework/gii/assets/
+!/framework/zii/widgets/assets/
+/protected/config/db.txt
+/protected/gmail_password.txt
+/php_errors.log
+/protected/logs/mail_logger.log
 /.directory
