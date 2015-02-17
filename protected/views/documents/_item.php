@@ -19,18 +19,19 @@
     </h2>
     
     <div class="col-md-4 col-xs-12 col-sm-6 doc-info-container">
-      категорія документа: <ul><li> 
-      <?php 
-      echo $model->_document_doccategory->CategoryName 
-        . " " .$model->_document_doccategory->CategoryCode; ?>
-      </li></ul>
+
     </div>
     
     <div class="col-md-4 col-xs-12 col-sm-6 doc-info-container">
-      тип документа: <ul><li>
+      <div style="font-size: 12pt;">
       <?php 
-      echo $model->_document_doctype->TypeName; ?>
-      </li></ul>
+      echo $model->_document_doccategory->CategoryName 
+        . " " .$model->_document_doccategory->CategoryCode; ?>
+      </div>
+      <div style="font-size: 12pt;">
+      <?php 
+      echo "(".$model->_document_doctype->TypeName . ")"; ?>
+      </div>
     </div>
     
     <?php if(Yii::app()->user->checkAccess('_DocsAdmin')){ ?>
@@ -61,9 +62,9 @@
   
   <div class="row row-nomargins">
     
-    <div class="col-xs-12 col-sm-6 col-md-4">
+    <div class="col-xs-12 col-sm-6 col-md-3">
       <div class="dfblock">
-        <legend>Дата надходження та індекс документа</legend>
+        <legend  style="font-size: 8pt;">Дата надходження та індекс документа</legend>
         <?php 
         //якщо користувач має права адмініструання документів
         if(Yii::app()->user->checkAccess('_DocsAdmin')){ ?>
@@ -96,7 +97,7 @@
       </div>
     </div>
     
-    <div class="col-xs-12 col-sm-6 col-md-4">
+    <div class="col-xs-12 col-sm-6 col-md-3">
       <div class="dfblock">
         <legend>Дата та індекс документа</legend>
         <?php 
@@ -111,6 +112,141 @@
       </div>
     </div>
     
+    <div class="col-xs-12 col-sm-6 col-md-3">
+      <div class="dfblock">
+        <legend>Підписано</legend>
+          <?php $controller->echoInfoContainer($model,'Signed',$model->idDocument,'text',
+            $model->Signed); ?>
+      </div>
+    </div>
+    
+    <div class="col-xs-12 col-sm-6 col-md-3">
+      <div class="dfblock">
+        <legend style="font-size: 8pt;">Резолюція або кому надіслано документ</legend>
+          <?php $controller->echoInfoContainer($model,'Resolution',$model->idDocument,'text',
+            $model->Resolution); ?>
+      </div>
+    </div>
+    
+    
+  </div>
+  
+  
+  <div class="row row-nomargins">
+    <div class="col-xs-12 col-sm-12 col-md-6">
+      <div class="dfblock docsummary">
+        <legend>Короткий зміст документа</legend>
+          <?php $controller->echoInfoContainer($model,'Summary',$model->idDocument,'textarea',
+            $model->Summary); ?>
+      </div>
+    </div>
+    
+    <?php 
+      //підготовка виведення даних контролю та виконання
+      $oncontrol = "";
+      $done = "";
+      if(((strlen(trim($model->ControlDate)) > 0) || (strlen(trim($model->ControlMark)) > 0)) 
+        && (strlen(trim($model->DoneMark)) > 0)){
+        $done = "done";
+      }
+      if(((strlen(trim($model->ControlDate)) > 0) || (strlen(trim($model->ControlMark)) > 0)) 
+        && (strlen(trim($model->DoneMark)) == 0)){
+        $oncontrol = "oncontrol";
+        $done = "";
+      }
+    ?>
+    
+    <div class="col-xs-12 col-sm-6 col-md-3">
+      <div class="dfblock <?php echo $oncontrol; ?>">
+        <legend>Контроль</legend>
+          <?php 
+            if(((strlen(trim($model->ControlDate)) > 0) || (strlen(trim($model->ControlMark)) > 0)) || 
+                !(implode(',',Users::model()->findByPk(Yii::app()->user->id)->department_ids) !=
+                  implode(',',$model->_document_user->department_ids) &&
+                (!Yii::app()->user->checkAccess('_DocsAdmin')))){
+              echo "<ul class='controls'><!--li>дата контролю: ";
+              $controller->echoInfoContainer($model,'ControlDate',$model->idDocument,'text',
+                $model->ControlDate); 
+              echo "</li--><li> ";
+              $controller->echoInfoContainer($model,'ControlMark',$model->idDocument,'textarea',
+                $model->ControlMark);
+              echo "</li></ul>";
+            } ?>
+      </div>
+    </div>
+    
+    <div class="col-xs-12 col-sm-6 col-md-3">
+      <div class="dfblock <?php echo $done; ?>">
+        <legend>Відмітка про виконання документа</legend><ul class='marks'>
+          <?php 
+            if((strlen(trim($model->DoneMark)) > 0) ||
+                !(implode(',',Users::model()->findByPk(Yii::app()->user->id)->department_ids) !=
+                  implode(',',$model->_document_user->department_ids) &&
+                (!Yii::app()->user->checkAccess('_DocsAdmin')))){
+            ?>
+            <li>
+            <?php $controller->echoInfoContainer($model,'DoneMark',$model->idDocument,'textarea',
+              $model->DoneMark); ?>
+            </li>
+          <?php } ?></ul>
+      </div>
+    </div>
+   
+  </div>
+  
+  <div class="row row-nomargins">
+    
+    <div class="col-xs-12 col-sm-12 col-md-8" >
+      <div class="dfblock autoheight" style="min-height: 100px;">
+        <legend class="show" id="<?php echo $model->idDocument; ?>-show">
+          <span class="glyphicon glyphicon-send"></span>
+          Розсилки
+        </legend>
+        
+          <div class="nowrap">
+          <?php for($i = 0; $i < count($model->_document_flows); $i++){  ?>
+            <div class="flow-block">
+              <legend><?php 
+              echo CHtml::link(
+                date("d.m.Y H:i",strtotime($model->_document_flows[$i]->Created)),
+                Yii::app()->CreateUrl('flows/index',array(
+                  'Flows[idFlow]'=>$model->_document_flows[$i]->idFlow
+                )),
+                array('target'=>"_blank")
+              ); ?> - 
+                <?php echo "<u title='"
+                  .$model->_document_flows[$i]->_flow_user->info."("
+                  .$model->_document_flows[$i]->_flow_user->contacts.")'>"
+                    .$model->_document_flows[$i]->_flow_user->username
+                  ."</u>"; ?>
+              </legend>
+            <?php foreach($model->_document_flows[$i]->_flow_flow_respondent as $flow_resp){ ?>
+              <div class="resp resp-<?php echo ($flow_resp->AnswerID)? "green":"brown"; ?>"
+                data-toggle="tooltip" data-placement="bottom"
+                title="<?php echo ($flow_resp->AnswerID)? 
+                    "Надано користувачем: "
+                    .$flow_resp->_flow_respondent_answer->_answer_user->info
+                    ." ".date("d.m.Y H:i",strtotime($flow_resp->_flow_respondent_answer->Created))
+                    .((strlen(trim($flow_resp->_flow_respondent_answer->AnswerText)) > 0)? 
+                      " (коментар: ".trim($flow_resp->_flow_respondent_answer->AnswerText).")" : "")
+                  : ""; ?>">
+                <span class="glyphicon glyphicon-<?php 
+                  echo ($flow_resp->AnswerID)? "ok":"ban"; ?>-circle">
+                </span>
+                <?php echo $flow_resp->_flow_respondent_department->DepartmentName; ?>
+              </div>
+            <?php } ?>
+            </div>
+          <?php } 
+          if (count($model->_document_flows) == 0){
+            echo "<i>немає</i>";
+          }
+          ?>
+          </div>
+        
+      </div>
+    </div>
+
     <div class="col-xs-12 col-sm-12 col-md-4">
       <div class="dfblock">
         <legend>
@@ -195,141 +331,8 @@
         </ol>
       </div>
     </div>
-    
-  </div>
-  
-  
-  <div class="row row-nomargins">
-    <div class="col-xs-12 col-sm-12 col-md-6">
-      <div class="dfblock docsummary">
-        <legend>Короткий зміст документа</legend>
-          <?php $controller->echoInfoContainer($model,'Summary',$model->idDocument,'textarea',
-            $model->Summary); ?>
-      </div>
-    </div>
-    
-    <div class="col-xs-12 col-sm-6 col-md-3">
-      <div class="dfblock">
-        <legend>Підписано</legend>
-          <?php $controller->echoInfoContainer($model,'Signed',$model->idDocument,'text',
-            $model->Signed); ?>
-      </div>
-    </div>
-    
-    <div class="col-xs-12 col-sm-6 col-md-3">
-      <div class="dfblock">
-        <legend style="font-size: 8pt;">Резолюція або кому надіслано документ</legend>
-          <?php $controller->echoInfoContainer($model,'Resolution',$model->idDocument,'text',
-            $model->Resolution); ?>
-      </div>
-    </div>
-   
-  </div>
-  
-  <div class="row row-nomargins">
-    
-    <div class="col-xs-12 col-sm-12 col-md-6" >
-      <div class="dfblock autoheight" style="min-height: 100px;">
-        <legend class="show" id="<?php echo $model->idDocument; ?>-show">
-          <span class="glyphicon glyphicon-send"></span>
-          Розсилки
-        </legend>
-        
-          <div class="nowrap">
-          <?php for($i = 0; $i < count($model->_document_flows); $i++){  ?>
-            <div class="flow-block">
-              <legend><?php 
-              echo CHtml::link(
-                date("d.m.Y H:i",strtotime($model->_document_flows[$i]->Created)),
-                Yii::app()->CreateUrl('flows/index',array(
-                  'Flows[idFlow]'=>$model->_document_flows[$i]->idFlow
-                )),
-                array('target'=>"_blank")
-              ); ?> - 
-                <?php echo "<u title='"
-                  .$model->_document_flows[$i]->_flow_user->info."("
-                  .$model->_document_flows[$i]->_flow_user->contacts.")'>"
-                    .$model->_document_flows[$i]->_flow_user->username
-                  ."</u>"; ?>
-              </legend>
-            <?php foreach($model->_document_flows[$i]->_flow_flow_respondent as $flow_resp){ ?>
-              <div class="resp resp-<?php echo ($flow_resp->AnswerID)? "green":"brown"; ?>"
-                data-toggle="tooltip" data-placement="bottom"
-                title="<?php echo ($flow_resp->AnswerID)? 
-                    "Надано користувачем: "
-                    .$flow_resp->_flow_respondent_answer->_answer_user->info
-                    ." ".date("d.m.Y H:i",strtotime($flow_resp->_flow_respondent_answer->Created))
-                    .((strlen(trim($flow_resp->_flow_respondent_answer->AnswerText)) > 0)? 
-                      " (коментар: ".trim($flow_resp->_flow_respondent_answer->AnswerText).")" : "")
-                  : ""; ?>">
-                <span class="glyphicon glyphicon-<?php 
-                  echo ($flow_resp->AnswerID)? "ok":"ban"; ?>-circle">
-                </span>
-                <?php echo $flow_resp->_flow_respondent_department->DepartmentName; ?>
-              </div>
-            <?php } ?>
-            </div>
-          <?php } 
-          if (count($model->_document_flows) == 0){
-            echo "<i>немає</i>";
-          }
-          ?>
-          </div>
-        
-      </div>
-    </div>
-    
-    <?php 
-      //підготовка виведення даних контролю та виконання
-      $oncontrol = "";
-      $done = "";
-      if(((strlen(trim($model->ControlDate)) > 0) || (strlen(trim($model->ControlMark)) > 0)) 
-        && (strlen(trim($model->DoneMark)) > 0)){
-        $done = "done";
-      }
-      if(((strlen(trim($model->ControlDate)) > 0) || (strlen(trim($model->ControlMark)) > 0)) 
-        && (strlen(trim($model->DoneMark)) == 0)){
-        $oncontrol = "oncontrol";
-        $done = "";
-      }
-    ?>
-    
-    <div class="col-xs-12 col-sm-6 col-md-3">
-      <div class="dfblock <?php echo $oncontrol; ?>">
-        <legend>Контроль</legend>
-          <?php 
-            if(((strlen(trim($model->ControlDate)) > 0) || (strlen(trim($model->ControlMark)) > 0)) || 
-                !(implode(',',Users::model()->findByPk(Yii::app()->user->id)->department_ids) !=
-                  implode(',',$model->_document_user->department_ids) &&
-                (!Yii::app()->user->checkAccess('_DocsAdmin')))){
-              echo "<ul class='controls'><!--li>дата контролю: ";
-              $controller->echoInfoContainer($model,'ControlDate',$model->idDocument,'text',
-                $model->ControlDate); 
-              echo "</li--><li> ";
-              $controller->echoInfoContainer($model,'ControlMark',$model->idDocument,'textarea',
-                $model->ControlMark);
-              echo "</li></ul>";
-            } ?>
-      </div>
-    </div>
-    
-    <div class="col-xs-12 col-sm-6 col-md-3">
-      <div class="dfblock <?php echo $done; ?>">
-        <legend>Відмітка про виконання документа</legend><ul class='marks'>
-          <?php 
-            if((strlen(trim($model->DoneMark)) > 0) ||
-                !(implode(',',Users::model()->findByPk(Yii::app()->user->id)->department_ids) !=
-                  implode(',',$model->_document_user->department_ids) &&
-                (!Yii::app()->user->checkAccess('_DocsAdmin')))){
-            ?>
-            <li>
-            <?php $controller->echoInfoContainer($model,'DoneMark',$model->idDocument,'textarea',
-              $model->DoneMark); ?>
-            </li>
-          <?php } ?></ul>
-      </div>
-    </div>
 
+    
   </div>
   
 </div>
