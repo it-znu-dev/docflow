@@ -2,6 +2,7 @@
 //header("Cache-Control: no-cache, must-revalidate"); // HTTP/1.1 force cache refresh
 //header("Expires: Sat, 26 Jul 1997 05:00:00 GMT"); // date in the past
 // change the following paths if necessary
+error_reporting(E_ALL & ~E_STRICT);
 ini_set('include_path',dirname(__FILE__).'/pear');
 //var_dump($_SERVER['DOCUMENT_ROOT'].'/framework/yii.php');exit();
 $yii=//$_SERVER['DOCUMENT_ROOT'].'/'.

@@ -71,6 +71,8 @@ class Documents extends CActiveRecord{
         return false;
       }
       $this->SubmissionDate = date("Y-m-d",strtotime($this->SubmissionDate));
+    } else {
+      $this->SubmissionDate = date("Y-m-d");
     }
     if ($this->uploaded_file){
       $fmodel = new Files();

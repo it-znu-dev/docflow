@@ -226,6 +226,22 @@ class Events extends CActiveRecord
       }//end for
     }//end if is_array
     $this->genFlow();
+    $response = $this->SendToService();
+    if (!$response){
+      return true;
+    }
+    $jr = json_decode($response);
+    $m = Events::model()->findByPk($this->idEvent);
+    if ((!isset($jr->calendar))? true: !isset($jr->calendar->id)){  
+      $m->ExternalID = null; $m->NewsUrl = null; $m->save();
+    } else {
+      $m->ExternalID = $jr->calendar->id;
+      $m->NewsUrl = str_replace('{year}',date("Y",strtotime($m->event_dates[0])),
+        str_replace('{month}',date("m",strtotime($m->event_dates[0])),
+          str_replace('{day}',date("d",strtotime($m->event_dates[0])),
+            $jr->calendar->url)));
+      $m->save();
+    }
     return true;
   }
   
@@ -284,10 +300,17 @@ class Events extends CActiveRecord
     $q = EventOrganizer::model()->deleteAll("EventID=".intval($this->idEvent));
     $r = EventInvited::model()->deleteAll("EventID=".intval($this->idEvent));
     $file = Files::model()->findByPk("FileID=".intval($this->FileID));
-    $file->delete();
+    if ($file){
+      $file->delete();
+    }
     $event_flows = EventFlow::model()->findAllByAttributes(array(
       'EventID' => intval($this->idEvent)
     ));
+    $event_dates = EventDate::model()->findAllByAttributes(array(
+      'EventID' => intval($this->idEvent)));
+    foreach ($event_dates as $ed){
+      $ed->delete();
+    }
     foreach ($event_flows as $f_e){
       $f = Flows::model()->findByPk($f_e->FlowID);
       if (!$f){
@@ -479,6 +502,9 @@ class Events extends CActiveRecord
    * @return string відповідь сервера сайту у форматі json
    */
   protected function SendToService(){
+    if (!$this->_send_to_site || empty($this->_send_to_site)){
+      return false;
+    }
     $date_intervals = array();
     // підключення
     $url = $this->url;
@@ -582,6 +608,9 @@ class Events extends CActiveRecord
     // запит...
     $response = curl_exec($ch);
     curl_close($ch);
+    $fp = fopen(Yii::app()->basePath.'/logs/curl.log','a+');
+    fwrite($fp,$response."\n");
+    fclose($fp);
     return $response;
   }
   

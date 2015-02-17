@@ -168,7 +168,7 @@ return array(
       'adminEmail' => '',
       //'docPath' => 'c:/UwAmp/docs/' ,
       //'docPath' => 'g:/docs/' ,
-      'docPath' => '/home/sysadmin/docs/' ,
+      'docPath' => '/var/docs/' ,
       
    ),
 );

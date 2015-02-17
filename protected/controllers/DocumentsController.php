@@ -193,7 +193,9 @@ class DocumentsController extends Controller {
       }
     } else {
       $model = Documents::model()->findByPk($pk);
-      if (implode(",",$u->department_ids) != implode(",",$model->_document_user->department_ids)){
+      if (implode(",",$u->department_ids) 
+         != implode(",",$model->_document_user->department_ids)
+        && !Yii::app()->user->checkAccess("_DocsAdmin")){
           throw new CHttpException(403, 
             'Редагувати документ #'.$model->idDocument.' можуть лише користувачі із підрозділів власника.');
       }
@@ -384,9 +386,10 @@ class DocumentsController extends Controller {
    * TEMPORARY SOLUTION
    * @param mixed $limit
    * @param mixed $offset
+   * @param string $password
    */
-  public function actionTemp($limit=10,$offset=0){
-    $conn = mysqli_connect("localhost","root","sa","docflow");
+  public function actionTemp($limit=10,$offset=0, $password=""){
+    $conn = mysqli_connect("localhost","root",$password,"docflow");
     if ($conn){
       $conn->query("set names utf8");
       $res = $conn->query("select idDocument, DocumentInputNumber, SubmissionDate from documents "
@@ -402,6 +405,7 @@ class DocumentsController extends Controller {
         $m = preg_match("/^\D*([0-9]+)[\/|\\\].+\s+від\s*/",$_num,$matches2);
         if ($n || $m){
           $model = Documents::model()->findByPk($_id);
+          $model->SubmissionDate = date("Y-m-d",strtotime($model->Created));
           if ($n){
             $model->SubmissionIndex = $matches1[1];
             $model->SubmissionDate = $matches1[4].'-'.$matches1[3].'-'.$matches1[2];
