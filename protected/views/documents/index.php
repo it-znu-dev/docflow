@@ -289,9 +289,9 @@ $controller = $this;
           array('class'=>'SubmissionYearFilter'))
         .CHtml::activeDropDownList($model,'CategoryID',(array(""=>"усі категорії")+Doccategories::model()->dropDown()),
           array('class'=>'CategoryFilter'))
-        .CHtml::activeDropDownList($model,'TypeID',(array(""=>"усі типи")
-            +CHtml::listData(Doctypes::model()->findAll("1 ORDER BY TypeName ASC"),"idType","TypeName")),
-          array('class'=>'CategoryFilter'))
+//        .CHtml::activeDropDownList($model,'TypeID',(array(""=>"усі типи")
+//            +CHtml::listData(Doctypes::model()->findAll("1 ORDER BY TypeName ASC"),"idType","TypeName")),
+//          array('class'=>'CategoryFilter'))
         ."<input type='text' name='Documents[DocumentInfo]' value='".$model->DocumentInfo."' 
             class='filter-field' placeholder='Кор. зміст та індекси'/>
           <input type='text' name='Documents[Correspondent]' value='".$model->Correspondent."' 
@@ -299,7 +299,7 @@ $controller = $this;
           <input type='text' name='Documents[Signed]' value='".$model->Signed."' 
             class='filter-field' placeholder='Підписано'/>
           <input type='text' name='Documents[Resolution]' value='".$model->Resolution."' 
-            class='filter-field' placeholder='На кого розписано(резолюція)'/>
+            class='filter-field' placeholder='Резолюція'/>
           <input type='text' name='Documents[ControlMark]' value='".$model->ControlMark."' 
             class='filter-field' placeholder='Контроль'/>
           <input type='text' name='Documents[DoneMark]' value='".$model->DoneMark."' 

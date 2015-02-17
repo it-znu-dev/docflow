@@ -2,12 +2,28 @@
 $db_name = "docflow";
 $username = "root";
 $password = "";
+$docPath = "/var/docs/";
 $fp = fopen("protected/config/db.txt","r");
 if ($fp){
   $db_name = str_replace("\n","",str_replace("\r","",fgets($fp)));
   $username = str_replace("\n","",str_replace("\r","",fgets($fp)));
   $password = str_replace("\n","",str_replace("\r","",fgets($fp)));
   fclose($fp);
+}
+$ffp = fopen("protected/config/docPath.txt","r");
+if ($ffp){
+  $docPath = str_replace("\n","",str_replace("\r","",fgets($ffp)));
+  fclose($ffp);
+}
+
+  $adminEmail = "it.znu.dev@gmail.com";
+  $adminEmailPassword = "";
+  
+$fffp = fopen("protected/config/email_config.txt","r");
+if ($ffp){
+  $adminEmail = str_replace("\n","",str_replace("\r","",fgets($fffp)));
+  $adminEmailPassword = str_replace("\n","",str_replace("\r","",fgets($fffp)));
+  fclose($fffp);
 }
 return array(
    'basePath' => dirname(__FILE__) . DIRECTORY_SEPARATOR . '..',
@@ -165,10 +181,9 @@ return array(
       ),
    ),
    'params' => array(
-      'adminEmail' => '',
-      //'docPath' => 'c:/UwAmp/docs/' ,
-      //'docPath' => 'g:/docs/' ,
-      'docPath' => '/var/docs/' ,
+      'adminEmail' => $adminEmail,
+      'adminEmailPassword' => $adminEmailPassword,
+      'docPath' => $docPath ,
       
    ),
 );

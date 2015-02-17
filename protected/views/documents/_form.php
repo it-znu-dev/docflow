@@ -6,12 +6,14 @@ $this->pageTitle=Yii::app()->name;
 
 <script type="text/javascript">
    $(function(){
-//     $('#plus_file').click(function(){
-//       $("input[type='file']:last").after(
-//         "<input type='file' name='files[]' class='form-group'/>"
-//       );
-//       return false;
-//     });
+    
+    $("#document-form").submit(function(e){
+      if (!confirm("Зберегти документ?")){
+        e.preventDefault();
+        $("#document-form input[type=submit]").attr("disabled",false);
+        return false;
+      }
+    });
   
     $('.datepicker').datepicker({
         format: 'dd.mm.yyyy',
@@ -19,6 +21,21 @@ $this->pageTitle=Yii::app()->name;
         language: 'uk',
         autoclose: true,
         todayHighlight: true
+    });
+    
+    $("#Documents_Visible").change(function(){
+      if (!$("#Documents_Visible").is(":checked")){
+        $("input[type=text]").attr("disabled","disabled");
+        $("select").attr("disabled","disabled");
+        $("textarea").attr("disabled","disabled");
+      } else {
+        $("input[type=text]").attr("disabled",false);
+        $("textarea").attr("disabled",false);
+        $("select").attr("disabled",false);
+        if ($("#DocumentsSubmissionIndex").length > 0){
+          $("#DocumentsSubmissionIndex").attr("disabled","disabled");
+         }
+      }
     });
     
     $('.typeahead').each(function(){
@@ -104,7 +121,7 @@ $this->pageTitle=Yii::app()->name;
         <div class="col-xs-12 col-sm-6">
             <?php if ($model->isNewRecord){ ?>
             <div class="col-xs-2 form-group" style="padding-left: 0px;">
-              <label for="DocumentsSubmissionIndex">індекс</label>
+              <label for="DocumentsSubmissionIndex">Індекс документа</label>
               <input type="text" 
                      id="DocumentsSubmissionIndex" readonly 
                      class="form-control" />
@@ -238,10 +255,12 @@ $this->pageTitle=Yii::app()->name;
     </div>
     
     <div class="row"  style="margin-left: 0px; margin-right: 0px;">
-      <div class="col-xs-4 form-group">
+      <div class="col-xs-8 form-group">
       </div>
-      <div class="col-xs-4 form-group" style="text-align: center;<?php
-        echo ((Yii::app()->user->checkAccess('_DocsAdmin') || Yii::app()->user->checkAccess('_DocsExtended'))? "":"display:none;");
+      <div class="col-xs-4 form-group" style="text-align: right;<?php
+        echo ((!$model->isNewRecord &&(
+          Yii::app()->user->checkAccess('_DocsAdmin') || Yii::app()->user->checkAccess('_DocsExtended')))?
+          "":"display:none;");
       ?>">
         <?php echo $form->checkBox($model,'Visible',(($model->isNewRecord)? array(
           'checked' => 'checked'

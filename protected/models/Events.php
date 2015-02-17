@@ -609,7 +609,7 @@ class Events extends CActiveRecord
     $response = curl_exec($ch);
     curl_close($ch);
     $fp = fopen(Yii::app()->basePath.'/logs/curl.log','a+');
-    fwrite($fp,$response."\n");
+    fwrite($fp,"\n".date("Y-m-d H:i:s -- ") . $response."\n");
     fclose($fp);
     return $response;
   }

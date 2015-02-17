@@ -260,25 +260,25 @@ class Documents extends CActiveRecord{
   public function attributeLabels(){
     return array(
       'idDocument' => 'ID',
-      'UserID' => 'ідентифікатор користувача',
-      'TypeID' => 'тип',
-      'CategoryID' => 'категорія',
-      'Visible' => 'доступний',
+      'UserID' => 'Ідентифікатор користувача',
+      'TypeID' => 'Тип документа',
+      'CategoryID' => 'Категорія документа',
+      'Visible' => 'Доступний',
       'Created' => 'створено',
-      'DocumentName' => 'назва документа',
-      'Summary' => 'короткий зміст',
+      'DocumentName' => 'Назва документа',
+      'Summary' => 'Короткий зміст',
       'SubmissionIndex' => 'індекс документа в межах категорії і року надходження',
-      'SubmissionDate' => 'дата надходження',
-      'ExternalIndex' => 'оригінальні (зовнішні) дата та індекс документа',
-      'Correspondent' => 'кореспондент',
-      'Signed' => 'підписано',
-      'Resolution' => 'резолюція або кому надіслано документ',
-      'UserInfo' => 'користувач',
-      'SubmissionYear' => 'рік надходження',
-      'ControlMark' => 'відмітки контролю',
-      'DoneMark' => 'відмітки виконання',
-      'ControlDate' => 'дата контролю',
-      'file' => 'файли',
+      'SubmissionDate' => 'Дата надходження',
+      'ExternalIndex' => 'Дата та індекс документа',
+      'Correspondent' => 'Кореспондент',
+      'Signed' => 'Підписано',
+      'Resolution' => 'Резолюція або кому надіслано документ',
+      'UserInfo' => 'Користувач',
+      'SubmissionYear' => 'Рік надходження',
+      'ControlMark' => 'Контроль',
+      'DoneMark' => 'Відмітка виконання документа',
+      'ControlDate' => 'Дата контролю',
+      'file' => 'Файли',
     );
   }
 
@@ -298,7 +298,9 @@ class Documents extends CActiveRecord{
     // @todo Please modify the following code to remove attributes that should not be searched.
 
     $criteria=new CDbCriteria;
-
+    
+    $defOrder = 't.Created DESC';
+    
     $criteria->compare('idDocument',$this->idDocument);
     $criteria->with = array();
     $criteria->with[] = '_document_flow_respondent';
@@ -355,6 +357,10 @@ class Documents extends CActiveRecord{
     $criteria->compare('ControlDate',$this->ControlDate,true);
     $criteria->compare('ControlMark',$this->ControlMark,true);
     $criteria->compare('DoneMark',$this->DoneMark,true);
+    
+    if ($this->CategoryID){
+      $defOrder = 't.SubmissionIndex DESC, t.Created DESC';
+    }
 
     return new CActiveDataProvider($this, array(
       'criteria'=>$criteria,
@@ -362,7 +368,7 @@ class Documents extends CActiveRecord{
             'pageSize' => 10,
         ),
         'sort'=>array(
-            'defaultOrder'=>'t.Created DESC',
+            'defaultOrder'=>$defOrder,
         ),
     ));
   }

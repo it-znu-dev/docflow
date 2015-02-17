@@ -23,25 +23,49 @@ protected/config/db.txt
 protected/
 ├── config/
 │   ├── db.txt
+
 ```
 
-Пароль до ел. пошти it.znu.edu@gmail.com дістається із файлу 
-protected/gmail_password.txt
+Повний шлях до директорії збереження документів дістається із файлу 
+protected/config/docPath.txt
 ```
 protected/
-├── gmail_password.txt
+├── config/
+│   ├── docPath.txt
 ```
 
-У unix та linux-системах директорії assets, protected/runtime повинні бути доступні для запису
+Електронна пошта і пароль для відправки повідомлень про розсилки респондентам дістаються із файлу
+protected/config/email_config.txt
+```
+protected/
+├── config/
+│   ├── email_config.txt
+```
+
+Звіт про відправку інформації про розсилку по ел. пошті надходить до файлу
+protected/logs/mail_logger.log
+```
+protected/
+├── logs/
+│   ├── mail_logger.log
+
+```
+
+Дані відповіді серевера сайту ЗНУ після відправки даних через CURL надходить до файлу
+protected/logs/curl.log
+```
+protected/
+├── logs/
+│   ├── curl.log
+
+```
+
+У unix та linux-системах директорії 
+  assets, protected/runtime, protected/logs 
+повинні бути доступні для запису
 ```
 assets/
 protected/
 ├── runtime/
-```
-
-В параметрі 'docPath' (main.php) вказується абсолютний шлях до місця збереження документів
-```
-protected/
-├── config/
-│   ├── main.php
+├── logs/
 ```

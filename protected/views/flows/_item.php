@@ -85,7 +85,7 @@
       
       <?php if (count($model->document_ids) > 0){ ?>
       <div class="dfblock resp-box autoheight">
-        <legend><?php if(count($model->document_ids) == 1 
+        <legend class="doc-legend"><?php if(count($model->document_ids) == 1 
               && !empty($model->_flow_documents[0]->_document_files) 
               && $model->_flow_documents[0]->_document_files[0]->exists){ ?>
             <a href="<?php echo Yii::app()->CreateUrl("files/download",array('id'=>
@@ -100,7 +100,7 @@
         ?>
         <div class="col-xs-12">
           <div class="dfblock autoheight">
-            <legend><?php 
+            <legend class="doc-legend"><?php 
             echo CHtml::link($doc->DocumentName . 
               ((!empty($doc->_document_submit))? 
                 " (".$doc->_document_submit[0]->SubmissionInfo.")" 
@@ -112,7 +112,7 @@
             ). ((strlen(trim($doc->DoneMark))>0)? "<div style='color:green;'> #виконання: ".$doc->DoneMark."</div>" : "");
             ?></legend>
             <div class="col-xs-12 col-md-8">
-              <div class="dfblock autoheight"><?php 
+              <div class="dfblock autoheight doc-summary"><?php 
                 echo $doc->Summary;
                ?></div><!-- // Document Summary block -->
             </div><!-- // Document Summary bootstrap-column block -->

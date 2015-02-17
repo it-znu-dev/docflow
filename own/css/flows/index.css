@@ -138,3 +138,11 @@ input.almost-full-width{
   max-height: 300px;
   overflow: auto;
 }
+
+.doc-summary {
+  font-size: 13pt;
+}
+
+.doc-legend{
+  font-size: 12pt;
+}

@@ -2,6 +2,14 @@ h2 {
   margin-top: 2px;
 }
 
+td div.dfbox a {
+  font-size: 12pt;
+}
+
+td div.dfbox a.DocumentName {
+  font-size: 22pt;
+}
+
 .btn-margin {
   margin: 3px;
 }
@@ -29,7 +37,7 @@ a.editable-pre-wrapped {
 
 .nowrap {
   white-space:nowrap;
-  overflow-x: scroll;
+  overflow-x: auto;
 }
 
 .flow-block {
@@ -70,7 +78,7 @@ a.editable-pre-wrapped {
 }
 
 .oncontrol {
-  background-color: rgba(255,128,128,0.3);
+  background-color: rgba(255,32,32,0.5);
 }
 
 .right-side {
@@ -153,4 +161,7 @@ input.filter-field {
 
 input.almost-full-width{
   width: 95%;
+}
+.doc-index-in {
+  font-size: 13pt;
 }

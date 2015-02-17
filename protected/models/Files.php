@@ -132,7 +132,8 @@ class Files extends CActiveRecord {
       }
     }
     if (!is_file($this->folder . $this->FileLocation)){
-      $this->addError('file_itself',"Не вдалося зберегти файл '.$this->folder . $this->FileLocation.': внутрішня помилка.");
+      $this->addError('file_itself',"Не вдалося зберегти файл '"
+        . ".$this->folder . $this->FileLocation.': внутрішня помилка.");
       return false;   
     }
     return true;

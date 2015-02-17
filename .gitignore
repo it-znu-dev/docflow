@@ -3,7 +3,9 @@ assets/
 !/framework/gii/assets/
 !/framework/zii/widgets/assets/
 protected/config/db.txt
-protected/gmail_password.txt
+protected/config/docPath.txt
+protected/config/email_config.txt
 /php_errors.log
 protected/logs/mail_logger.log
+protected/logs/curl.log
 /.directory
