@@ -376,8 +376,8 @@ class Flows extends CActiveRecord
             'host' => 'ssl://smtp.gmail.com',
             'port' => '465',
             'auth' => true,
-            'username' => 'it.znu.edu@gmail.com',
-            'password' => $gpassword
+            'username' => Yii::app()->params['adminEmail'],
+            'password' => Yii::app()->params['adminEmailPassword'],
         ));
     $mail = $smtp->send($to, $headers, $body);
     
