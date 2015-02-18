@@ -359,7 +359,7 @@ class Documents extends CActiveRecord{
     $criteria->compare('DoneMark',$this->DoneMark,true);
     
     if ($this->CategoryID){
-      $defOrder = 't.SubmissionIndex DESC, t.Created DESC';
+      $defOrder = 'YEAR(SubmissionDate) DESC, t.SubmissionIndex DESC, t.Created DESC';
     }
 
     return new CActiveDataProvider($this, array(
