@@ -324,7 +324,7 @@ class Documents extends CActiveRecord{
       $criteria->with[] = '_document_submit';
       $criteria->addCondition('(YEAR(SubmissionDate) = '.intval($this->SubmissionYear).')'
         .' OR '
-        .'(_document_submit.SubmissionInfo like "%'.intval($this->SubmissionYear).'%")'
+        .'(_document_submit.SubmissionInfo like "%.'.intval($this->SubmissionYear).'%")'
         .' OR '
         .'(YEAR(Created) = '.intval($this->SubmissionYear).')'
       );
