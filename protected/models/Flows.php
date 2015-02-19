@@ -324,21 +324,12 @@ class Flows extends CActiveRecord
     if (!$model){
       return false;
     }
-    $fh = fopen(Yii::app()->basePath . '/gmail_password.txt',"r");
-    $gpassword = "";
-    if ($fh){
-      $gpassword = fgets($fh);
-      fclose($fh);
-    } else {
-      return false;
-    }
-    if (!$gpassword){
-      return false;
-    }
     require_once "Mail.php";
     $to = "";
     $a_to = array();
-    $from = 'it.znu.edu@gmail.com';
+    $a_to[0] = array();
+    $a_to[1] = array();
+    $from = Yii::app()->params['adminEmail'];
     $subject = "СЕД ЗНУ : ".$model->FlowName;
 
     $a_depts = array();
@@ -358,7 +349,11 @@ class Flows extends CActiveRecord
         /* @var $user Users */
         $k = preg_match("/\\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,4}\\b/i",$user->contacts,$matches);
         if ($k){
-          $a_to[] = $matches[0];
+          if (strpos($matches[0], "@znu.edu.ua") !== false){
+            $a_to[1][] = $matches[0];
+          } else {
+            $a_to[0][] = $matches[0];
+          }
         }
       }
     }
@@ -366,38 +361,53 @@ class Flows extends CActiveRecord
     if (count($a_to) == 0){
       return false;
     }
-    $to = implode(", ",$a_to);
-    $headers = array(
-        'From' => $from,
-        'To' => $to,
-        'Subject' => $subject
-    );
-    $smtp = Mail::factory('smtp', array(
+    foreach ($a_to as $key => $_a_to){
+      if (empty($_a_to)){
+        continue;
+      }
+
+      $to = implode(", ",$_a_to);
+      $smtp = Mail::factory('smtp', array(
             'host' => 'ssl://smtp.gmail.com',
             'port' => '465',
             'auth' => true,
             'username' => Yii::app()->params['adminEmail'],
             'password' => Yii::app()->params['adminEmailPassword'],
-        ));
-    $mail = $smtp->send($to, $headers, $body);
-    
-    $dir = Yii::app()->basePath . '/logs/';
-    if (is_file($dir . "mail_logger.log")){
-      $fp = fopen($dir . "mail_logger.log","a");
-    } else {
-      $fp = fopen($dir . "mail_logger.log","w");
+          ));
+      
+      if ($key === 1){
+        $headers = array(
+            'From' => $from,
+            'To' => $to,
+            'Subject' => 'Nova rozsylka cherez systemu elektronnoho dokumentoobihu'
+        );
+        $body = "DETALI: ".Yii::app()->createAbsoluteUrl("flows/index",array("Flows[idFlow]" => $model->idFlow));
+      } else {
+        $headers = array(
+            'From' => $from,
+            'To' => $to,
+            'Subject' => $subject
+        );
+      }
+      $mail = $smtp->send($to, $headers, $body);
+      
+      $dir = Yii::app()->basePath . '/logs/';
+      if (is_file($dir . "mail_logger.log")){
+        $fp = fopen($dir . "mail_logger.log","a");
+      } else {
+        $fp = fopen($dir . "mail_logger.log","w");
+      }
+      $log_msg = "";
+      if (PEAR::isError($mail)) {
+          $log_msg = date("Y-m-d H:i:s") . " ER " . $mail->getMessage() . "\n";
+      } else {
+          $log_msg = date("Y-m-d H:i:s") . " OK =>[" . $to . "]\n";
+      }
+      if ($fp){
+        fwrite($fp,$log_msg);
+        fclose($fp);
+      }
     }
-    $log_msg = "";
-    if (PEAR::isError($mail)) {
-        $log_msg = date("Y-m-d H:i:s") . " ER " . $mail->getMessage() . "\n";
-    } else {
-        $log_msg = date("Y-m-d H:i:s") . " OK =>[" . $to . "]\n";
-    }
-    if ($fp){
-      fwrite($fp,$log_msg);
-      fclose($fp);
-    }
-
     return true;
 
   }

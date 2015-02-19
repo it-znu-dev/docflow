@@ -94,6 +94,8 @@ class EventsController extends Controller {
   public function actionCreate() {
     $model = new Events; 
     $nmodel = $this->commonSaver($model);
+    $model->_send_to_site = 1;
+    $model->_flow_to_invited = 1;
     $this->render('create', array(
         'model' => $nmodel,
     ));

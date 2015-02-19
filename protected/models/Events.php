@@ -111,8 +111,17 @@ class Events extends CActiveRecord
     parent::beforeValidate();
     $is_error = true;
     foreach ($this->patterns as $pattern){
-      if (preg_match($pattern,$this->DateSmartField,$matches)){
-        $is_error = false; continue;
+      $dsm_parts = explode(",",$this->DateSmartField);
+      $is_error_part = false;
+      foreach($dsm_parts as $dsm_part){
+        if (!preg_match($pattern,$dsm_part,$matches)){
+          $is_error_part = true; 
+          break;
+        }
+      }
+      if ($is_error_part == false){
+        $is_error = false;
+        break;
       }
     }
     if ($is_error 
