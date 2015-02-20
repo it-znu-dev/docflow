@@ -378,14 +378,16 @@ class Flows extends CActiveRecord
       if ($key === 1){
         $headers = array(
             'From' => $from,
-            'To' => $to,
+            'To' => Yii::app()->params['adminEmail'],
+            'Bcc' => $to,
             'Subject' => 'Nova rozsylka cherez systemu elektronnoho dokumentoobihu'
         );
         $body = "DETALI: ".Yii::app()->createAbsoluteUrl("flows/index",array("Flows[idFlow]" => $model->idFlow));
       } else {
         $headers = array(
             'From' => $from,
-            'To' => $to,
+            'To' => Yii::app()->params['adminEmail'],
+            'Bcc' => $to,
             'Subject' => $subject
         );
       }
