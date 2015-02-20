@@ -189,13 +189,13 @@
               )); ?>
             </legend>
             <div class="col-xs-12 col-md-8">
-              <div class="dfblock autoheight">
+              <div class="dfblock autoheight event-place">
               <?php echo 'Місце: '.((strlen($ev->Place)>0)? CHtml::encode($ev->Place):"<i>не вказано</i>") ?>
               </div><!-- // Event Place block -->
             </div><!-- // Event Place bootstrap-column block -->
             
             <div class="col-xs-12 col-md-4">
-              <div class="dfblock autoheight">
+              <div class="dfblock autoheight event-remain">
                 <?php 
                   echo (($ev->remaining_time == "подія вже відбулась")? 
                     "<i>".$ev->remaining_time."</i>":'До події '.$ev->remaining_time);

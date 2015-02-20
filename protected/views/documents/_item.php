@@ -11,31 +11,32 @@
   return false;
   }
 ?>
-<div class="dfbox" id="<?php echo $model->idDocument; ?>_doc">
+<div class="dfbox" id="<?php echo $model->idDocument; ?>_doc" style="width: 100%; display: block;">
   <div class="row dfmetaheader">
     
     <h2>
       <?php $controller->echoInfoContainer($model,'DocumentName',$model->idDocument,'text',$model->DocumentName); ?>
     </h2>
     
-    <div class="col-md-4 col-xs-12 col-sm-6 doc-info-container">
+    <div class="col-md-3 col-xs-12 col-sm-6 doc-info-container">
 
     </div>
     
-    <div class="col-md-4 col-xs-12 col-sm-6 doc-info-container">
-      <div style="font-size: 12pt;">
+    <div class="col-md-6 col-xs-12 col-sm-6 doc-info-container">
+      <div style="font-size: 12pt;" class="col-xs-12 col-sm-6">
       <?php 
       echo $model->_document_doccategory->CategoryName 
         . " " .$model->_document_doccategory->CategoryCode; ?>
       </div>
-      <div style="font-size: 12pt;">
+      <div style="font-size: 12pt;" class="col-xs-12 col-sm-6">
       <?php 
-      echo "(".$model->_document_doctype->TypeName . ")"; ?>
+      echo " (".$model->_document_doctype->TypeName . ")"; ?>
       </div>
     </div>
     
+    <div class="col-md-3 col-xs-12 col-sm-12 doc-info-container">
     <?php if(Yii::app()->user->checkAccess('_DocsAdmin')){ ?>
-    <div class="col-md-4 col-xs-12 col-sm-12 doc-info-container"><ul>
+    <ul>
       <li>
       Створено користувачем:
       <u title="<?php echo $model->_document_user->info . '(' . $model->_document_user->contacts . ")"; ?>" >
@@ -45,8 +46,8 @@
       <?php $controller->echoInfoContainer($model,'Created',$model->idDocument,'text',
         $model->Created); ?>
       </li></ul>
-    </div>
     <?php } ?>
+    </div>
   </div>
   
   
@@ -88,7 +89,7 @@
         <?php  }
           //якщо користувач не має права адмініструання документів, показати лише зібрану інформацію
           else if (!empty($model->_document_submit)) { ?>
-          <?php echo "<ul class='doc-index-in'><li>"
+          <?php echo "<ul class='doc-index-in'><li style='color: black;'>"
             .$model->_document_submit[0]->SubmissionInfo
             ."</li></ul>"; ?>
         <?php } else { ?>
@@ -204,23 +205,32 @@
         </legend>
         
           <div class="nowrap">
-          <?php for($i = 0; $i < count($model->_document_flows); $i++){  ?>
+          <?php 
+            $criteria = new CDbCriteria();
+            $criteria->with = array("_flow_document_flow");
+            $criteria->order = "Created ASC";
+            $criteria->compare("_flow_document_flow.DocumentID",$model->idDocument);
+            $document_flows = Flows::model()->findAll($criteria);
+          ?>
+          <?php for($i = 0; $i < count($document_flows); $i++){  
+            $flow = $document_flows[$i];
+          ?>
             <div class="flow-block">
               <legend><?php 
               echo CHtml::link(
-                date("d.m.Y H:i",strtotime($model->_document_flows[$i]->Created)),
+                date("d.m.Y H:i",strtotime($flow->Created)),
                 Yii::app()->CreateUrl('flows/index',array(
-                  'Flows[idFlow]'=>$model->_document_flows[$i]->idFlow
+                  'Flows[idFlow]'=>$flow->idFlow
                 )),
                 array('target'=>"_blank")
               ); ?> - 
                 <?php echo "<u title='"
-                  .$model->_document_flows[$i]->_flow_user->info."("
-                  .$model->_document_flows[$i]->_flow_user->contacts.")'>"
-                    .$model->_document_flows[$i]->_flow_user->username
+                  .$flow->_flow_user->info."("
+                  .$flow->_flow_user->contacts.")'>"
+                    .$flow->_flow_user->username
                   ."</u>"; ?>
               </legend>
-            <?php foreach($model->_document_flows[$i]->_flow_flow_respondent as $flow_resp){ ?>
+            <?php foreach($flow->_flow_flow_respondent as $flow_resp){ ?>
               <div class="resp resp-<?php echo ($flow_resp->AnswerID)? "green":"brown"; ?>"
                 data-toggle="tooltip" data-placement="bottom"
                 title="<?php echo ($flow_resp->AnswerID)? 

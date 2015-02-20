@@ -4,8 +4,15 @@ background-attachment: fixed;
 background-color: rgba(170,220,255,1);
 }
 
+#bs-example-navbar-collapse-1 ul li a{
+  color: #333 !important;
+}
+#bs-example-navbar-collapse-1 ul li a:hover{
+  color: blue !important;
+}
+
 .dfbox {
-  background-color: rgba(255,255,255,0.8);
+  background-color: rgba(255,255,255,0.7);
   background: white\9;
   word-wrap: break-word;
   border-radius: 4px;
@@ -17,7 +24,7 @@ background-color: rgba(170,220,255,1);
 }
 
 .dfblock {
-  background-color: rgba(190, 190, 255,0.7);
+  background-color: rgba(130, 150, 235, 0.5);
   background: white\9;
   word-wrap: break-word;
   border-radius: 4px;
@@ -105,12 +112,14 @@ ul.nav li a {
   background-color: rgba(70,200,255,0.3);
   background: white\9;
   border-radius: 4px;
+  font-family: 'Verdana';
   color: black;
 }
 .editable-click:hover{
   border-bottom: 0px dashed grey !important;
   background-color: rgba(70,200,255,0.3);
   background: white\9;
+  font-family: 'Verdana';
   border-radius: 4px;
 }
 
@@ -149,6 +158,7 @@ legend {
     width: auto;
     margin-left: 5px;
     margin-bottom: 0px;
+    background-color: rgba(255,255,255,0.5);
 }
 
 legend a {
