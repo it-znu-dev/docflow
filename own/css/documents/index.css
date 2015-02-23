@@ -13,9 +13,15 @@ td div.dfbox a.DocumentName {
 .btn-margin {
   margin: 3px;
 }
-div.documents table.table-hover tbody tr.odd {background: rgba(100, 100, 255, 0.1);}
-div.documents table.table-hover tbody tr.even {background: rgba(60, 60, 200, 0.1);}
+div.documents table.table-hover tbody tr.odd {background: rgba(0, 0, 255, 0.1);}
+div.documents table.table-hover tbody tr.even {background: rgba(200, 200, 0, 0.2);}
 /* div.documents table.table-hover tbody tr:hover {background: rgba(255,255,255,0.1);} */
+input[type=text]::-webkit-input-placeholder {
+  color: #555;
+  text-decoration: underline;
+  font-style: italic;
+  font-family: Verdana;
+}
 
   
 div.documents table {table-layout:fixed;}
@@ -166,4 +172,6 @@ input.almost-full-width{
 }
 .doc-index-in {
   font-size: 13pt;
+  font-weight: bold;
+  padding-left: 13px;
 }

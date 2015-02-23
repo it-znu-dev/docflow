@@ -5,10 +5,10 @@ background-color: rgba(170,220,255,1);
 }
 
 #bs-example-navbar-collapse-1 ul li a{
-  color: #333 !important;
+  color: #03f !important;
 }
 #bs-example-navbar-collapse-1 ul li a:hover{
-  color: blue !important;
+  color: #333 !important;
 }
 
 .dfbox {
@@ -24,7 +24,7 @@ background-color: rgba(170,220,255,1);
 }
 
 .dfblock {
-  background-color: rgba(130, 150, 235, 0.5);
+  background-color: rgba(80, 165, 255, 0.4);
   background: white\9;
   word-wrap: break-word;
   border-radius: 4px;
