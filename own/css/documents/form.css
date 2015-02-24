@@ -7,3 +7,14 @@ form {
   width: 99%;
   margin: 0px auto;
 }
+
+#_confirmed {
+  width: 16px;
+  height: 16px;
+}
+
+#_confirmed_block {
+  color: red;
+  font-size: 12pt;
+  font-family: Verdana;
+}

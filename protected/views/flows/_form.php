@@ -4,6 +4,27 @@
 $this->pageTitle=Yii::app()->name;
 ?>
 
+<!--script type="text/javascript">
+  $(function(){
+    $("#_confirmed").change(function(){
+      if ($("#_confirmed").is(":checked")){
+        $("#_confirmed_block").css('color','#00AA00');
+      } else {
+        $("#_confirmed_block").css('color','#CC3333');
+      }
+      
+    });
+    
+    $("#flow-form").submit(function(e){
+      if (!$("#_confirmed").is(":checked")){
+        e.preventDefault();
+        $("#flow-form input[type=submit]").attr("disabled",false);
+        return false;
+      }
+    });
+  });
+</script-->
+
 <div class="dfbox">
   <h2 style="text-align: center;">
     <?php if($model->isNewRecord){ ?>
@@ -13,7 +34,7 @@ $this->pageTitle=Yii::app()->name;
   </h2>
   <?php
     $form = $this->beginWidget('CActiveForm',array(
-      'id'=>'user-form',
+      'id'=>'flow-form',
       'enableAjaxValidation'=>false,
     )); 
     
@@ -105,6 +126,12 @@ $this->pageTitle=Yii::app()->name;
     <?php } ?>
   </div>
     <div class="centred-buttons">
+      <!--div class="checkbox" id="_confirmed_block">
+        <label>
+        <input type="checkbox" name="_confirmed" id="_confirmed" />
+        Усі дані правильні
+        </label>
+      </div-->
       <?php echo CHtml::submitButton('Зберегти', array("class"=>"btn btn-large btn-primary")); ?>
     </div>
     <?php

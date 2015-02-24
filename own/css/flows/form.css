@@ -5,3 +5,14 @@
 .DepartmentName_comment, .CtrId, .DocumentInfo_comment {
   display: none;
 }
+
+#_confirmed {
+  width: 16px;
+  height: 16px;
+}
+
+#_confirmed_block {
+  color: red;
+  font-size: 12pt;
+  font-family: Verdana;
+}

@@ -109,18 +109,20 @@ class Events extends CActiveRecord
 
   protected function beforeValidate() {
     parent::beforeValidate();
-    $is_error = true;
-    foreach ($this->patterns as $pattern){
-      $dsm_parts = explode(",",$this->DateSmartField);
-      $is_error_part = false;
-      foreach($dsm_parts as $dsm_part){
-        if (!preg_match($pattern,$dsm_part,$matches)){
-          $is_error_part = true; 
+    $is_error = false;
+    
+    $dsm_parts = explode(",",$this->DateSmartField);
+    
+    foreach($dsm_parts as $dsm_part){
+      $is_error_part = true;
+      foreach ($this->patterns as $pattern){
+        if (preg_match($pattern,$dsm_part,$matches)){
+          $is_error_part = false; 
           break;
         }
       }
-      if ($is_error_part == false){
-        $is_error = false;
+      if ($is_error_part){
+        $is_error = true;
         break;
       }
     }
@@ -137,6 +139,12 @@ class Events extends CActiveRecord
       && strlen($this->FinishTime)>0){
         $this->addError('FinishTime','Невірний формат часу!');
         return false; 
+    }
+    if (strlen($this->FinishTime) == 0){
+      $this->FinishTime = '23:59:59';
+    }
+    if (strlen($this->StartTime) == 0){
+      $this->StartTime = '00:00:00';
     }
     if ($this->uploaded_file){
       $fmodel = new Files();

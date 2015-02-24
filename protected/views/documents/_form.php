@@ -5,10 +5,19 @@ $this->pageTitle=Yii::app()->name;
 ?>
 
 <script type="text/javascript">
-   $(function(){
+  $(function(){
+     
+    $("#_confirmed").change(function(){
+      if ($("#_confirmed").is(":checked")){
+        $("#_confirmed_block").css('color','#008800');
+      } else {
+        $("#_confirmed_block").css('color','#CC3333');
+      }
+      
+    });
     
     $("#document-form").submit(function(e){
-      if (!confirm("Зберегти документ?")){
+      if (!$("#_confirmed").is(":checked")){
         e.preventDefault();
         $("#document-form input[type=submit]").attr("disabled",false);
         return false;
@@ -270,6 +279,12 @@ $this->pageTitle=Yii::app()->name;
     </div>
     
     <div class="centred-buttons">
+      <div class="checkbox" id="_confirmed_block">
+        <label>
+        <input type="checkbox" name="_confirmed" id="_confirmed" />
+        Усі дані правильні
+        </label>
+      </div>
       <?php echo CHtml::submitButton('Зберегти', array("class"=>"btn btn-large btn-primary")); ?>
     </div>
     <?php
