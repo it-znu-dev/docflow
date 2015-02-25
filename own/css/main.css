@@ -184,6 +184,13 @@ legend a {
   background-color: rgba(255,255,255,0.5);
 }
 
+.errorSummary {
+  color: brown;
+  font-size: 11pt;
+  font-family: Verdana;
+  border: 1px solid red;
+}
+
 @media (min-width: 768px) {
   ul.nav li.dropdown ul.dropdown-menu  li.dropdown:hover > ul.dropdown-menu {
       display: block;

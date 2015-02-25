@@ -74,6 +74,18 @@ class Documents extends CActiveRecord{
     } else {
       $this->SubmissionDate = date("Y-m-d");
     }
+    $model_with_same_SubmissionInfo = Documents::model()->findByAttributes(array(
+      'SubmissionIndex' => $this->SubmissionIndex,
+      'SubmissionDate' => $this->SubmissionDate,
+      'CategoryID' => $this->CategoryID,
+    ));
+    if ($model_with_same_SubmissionInfo 
+      && strlen($model_with_same_SubmissionInfo->_document_doccategory->CategoryCode) > 0){
+      $this->addError('SubmissionIndex','Вже існує документ з таким індексом і датою надходження (кор. зміст: "'
+        .$model_with_same_SubmissionInfo->Summary
+        ."\")");
+      return false;
+    }
     if ($this->uploaded_file){
       $fmodel = new Files();
       $fmodel->Visible = 1;
