@@ -76,13 +76,15 @@ class Documents extends CActiveRecord{
     }
     $model_with_same_SubmissionInfo = Documents::model()->findByAttributes(array(
       'SubmissionIndex' => $this->SubmissionIndex,
-      'SubmissionDate' => $this->SubmissionDate,
+      //'SubmissionDate' => $this->SubmissionDate,
       'CategoryID' => $this->CategoryID,
     ));
     if ($model_with_same_SubmissionInfo
+      && date("Y",strtotime($model_with_same_SubmissionInfo->SubmissionDate)) ==
+         date("Y",strtotime($this->SubmissionDate))
       && $model_with_same_SubmissionInfo->idDocument != $this->idDocument
       && strlen($model_with_same_SubmissionInfo->_document_doccategory->CategoryCode) > 0){
-      $this->addError('SubmissionIndex','Вже існує документ з таким індексом і датою надходження (кор. зміст: "'
+      $this->addError('SubmissionIndex','Вже існує документ з таким індексом (кор. зміст: "'
         .$model_with_same_SubmissionInfo->Summary
         ."\")");
       return false;
