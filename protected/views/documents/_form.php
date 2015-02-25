@@ -47,6 +47,8 @@ $this->pageTitle=Yii::app()->name;
       }
     });
     
+<?php if(Yii::app()->user->checkAccess('_DocsAdmin') 
+  || Yii::app()->user->checkAccess('_DocsExtended')){ ?>
     $('.typeahead').each(function(){
       var $this = $(this);
       $(this).typeahead({
@@ -164,7 +166,9 @@ $this->pageTitle=Yii::app()->name;
 
   
     <?php } ?>
+<?php } ?>
   });
+
 </script>
 
 <div class="row row-nomargins dfbox" >
