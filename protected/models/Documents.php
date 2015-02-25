@@ -79,7 +79,8 @@ class Documents extends CActiveRecord{
       'SubmissionDate' => $this->SubmissionDate,
       'CategoryID' => $this->CategoryID,
     ));
-    if ($model_with_same_SubmissionInfo 
+    if ($model_with_same_SubmissionInfo
+      && $model_with_same_SubmissionInfo->idDocument != $this->idDocument
       && strlen($model_with_same_SubmissionInfo->_document_doccategory->CategoryCode) > 0){
       $this->addError('SubmissionIndex','Вже існує документ з таким індексом і датою надходження (кор. зміст: "'
         .$model_with_same_SubmissionInfo->Summary
