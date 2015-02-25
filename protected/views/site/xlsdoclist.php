@@ -64,7 +64,9 @@ $worksheet->write(0, 6, iconv("utf-8", $out_encoding,"відмітка вико�
 $i = 1;
 
 
-    foreach ($models as $model){
+    for ($j = 0; $j < count($models); $j++){
+      /* @var $model Documents */
+      $model = $models[$j];
       $input_num = "(відсутні)";
       if (!empty($model->_document_submit)){
         $input_num = $model->_document_submit[0]->SubmissionInfo;
@@ -95,6 +97,34 @@ $i = 1;
       $worksheet->write($i, 6, iconv("utf-8", $out_encoding,$mark),
               $format_wordwrap);
       $i++;
+      
+      $index_diff = 0;
+      
+      if ($j < count($models)-1){
+        $index_diff = intval($models[$j]->SubmissionIndex)
+          - intval($models[$j+1]->SubmissionIndex);
+      }
+      
+      if ($j < count($models)-1 && ($index_diff > 1) && strlen($model->_document_doccategory->CategoryCode) > 0){
+        for ($k = intval($models[$j]->SubmissionIndex)-1; $k >= intval($models[$j+1]->SubmissionIndex)+1; $k--){
+          $worksheet->write($i, 0, iconv("utf-8", $out_encoding, 
+            "№ ".$k.'/'.$model->_document_doccategory->CategoryCode),
+                  $format_wordwrap);
+          $worksheet->write($i, 1, iconv("utf-8", $out_encoding,"------"),
+                  $format_wordwrap);
+          $worksheet->write($i, 2, iconv("utf-8", $out_encoding,"------"),
+                  $format_wordwrap);
+          $worksheet->write($i, 3, iconv("utf-8", $out_encoding,"------"),
+                  $format_wordwrap);
+          $worksheet->write($i, 4, iconv("utf-8", $out_encoding,"------"),
+                  $format_wordwrap);
+          $worksheet->write($i, 5, iconv("utf-8", $out_encoding,"------"),
+                  $format_wordwrap);
+          $worksheet->write($i, 6, iconv("utf-8", $out_encoding,"------"),
+                  $format_wordwrap);
+          $i++;
+        }
+      }
     }
 
 // Let's send the file

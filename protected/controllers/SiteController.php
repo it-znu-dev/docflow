@@ -206,7 +206,7 @@ class SiteController extends Controller {
           (select DepartmentID from user_department ud where ud.UserID='.intval(Yii::app()->user->id).')
         )
       )');
-    $criteria->order = 'SubmissionIndex desc, Created desc';
+    $criteria->order = 'CategoryID asc, SubmissionIndex desc, Created desc';
     $criteria->compare('CategoryID',(($reqCategory && is_numeric($reqCategory)) ? $reqCategory : null));
     $criteria->addCondition('Created'
             . ' BETWEEN STR_TO_DATE("' . $reqDateFrom . ' 00:00:00",  "%Y-%m-%d %H:%i:%s" ) '
