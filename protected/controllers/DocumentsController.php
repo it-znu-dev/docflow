@@ -32,7 +32,8 @@ class DocumentsController extends Controller {
               'typeahead',
               'downloadZip',
               'cardprint',
-              'expectedIndex'
+              'expectedIndex',
+              'searchIndexAndShowInfo'
             ),
             'users' => array('@'),
         ),
@@ -105,7 +106,8 @@ class DocumentsController extends Controller {
         $model->Created = date('Y-m-d H:i:s');
       }
       if ($model->save() ){
-        $this->redirect(Yii::app()->CreateUrl('documents/index',array('CategoryID'=>$model->CategoryID)));
+        $this->redirect(Yii::app()->CreateUrl('documents/index',
+          array('Documents[CategoryID]'=>$model->CategoryID)));
       } else {
         $model->SubmissionDate = ((strlen($model->SubmissionDate))? 
           date("d.m.Y",strtotime($model->SubmissionDate)):"");
@@ -146,7 +148,7 @@ class DocumentsController extends Controller {
       if ($model->save() ){
         if (!Yii::app()->request->isAjaxRequest){
           $this->redirect(Yii::app()->CreateUrl('documents/index',
-            array('Documents[idDocument]'=>$model->idDocument)));
+            array('Documents[CategoryID]'=>$model->CategoryID)));
         } else {
           $nmodel = Documents::model()->findByPk($model->idDocument);
           echo CJSON::encode($nmodel->file_ids);
@@ -236,9 +238,10 @@ class DocumentsController extends Controller {
     $_name = Yii::app()->request->getParam('name',$name);
     $fields = array();
     $doc_model = new Documents();
-    if ($doc_model->hasAttribute($name) && mb_strlen($q,'utf-8') > 1){
+    if ($doc_model->hasAttribute($name) && mb_strlen($q,'utf-8') >= 1){
       $criteria = new CDbCriteria();
-      $criteria->compare($name, $q, true);
+      $criteria->compare($name, $q, ($name != "SubmissionIndex"));
+      $criteria->addInCondition("YEAR(SubmissionDate)",array(date("Y")));
       $criteria->addCondition('(Visible is not null) and (Visible > 0)');
       $criteria->order = $name.' ASC';
       $criteria->group = $name;
@@ -249,6 +252,10 @@ class DocumentsController extends Controller {
     echo CJSON::encode($fields);
   }
   
+  /**
+   * Метод для завантаження zip-архіву всіх файлів, пов’язканих з документом
+   * @param int $id ідентифікатор документа
+   */
   public function actionDownloadZip($id){
     $model = Documents::model()->findByPk(intval($id));
     if (!$model){
@@ -380,6 +387,55 @@ class DocumentsController extends Controller {
     unset($model);
     echo CJSON::encode(array('expected_index' => $expected_index));
     return $expected_index;
+  }
+  
+  /**
+   * Повертає повідомлення, якщо документ із заданим 
+   *   індексом, категорією і роком надходження вже існує (json-об’єкт)
+   * @param integer $DocID ID поточного документа документа
+   * @param integer $CategoryID ID категорії із форми створення/редагування документа
+   * @param string $SubmissionDate дата надходження 
+   * @param string $SubmissionIndex індекс надходження документа
+   *   із форми створення/редагування документа виду dd.mm.yyyy
+   * @param integer $UserID ID користувача із форми створення/редагування документа
+   * @return string
+   */
+  public function actionSearchIndexAndShowInfo($DocID,$CategoryID,$SubmissionDate,$SubmissionIndex,$UserID=0){
+    
+    if ($UserID == 0){
+      $UserID = Yii::app()->user->id;
+    }
+    if (!preg_match("/^\d\d\.\d\d\.\d\d\d\d$/",$SubmissionDate)){
+      echo CJSON::encode(array(
+        'expected_index' => ""
+      ));
+      return "";
+    }
+    $criteria = new CDbCriteria();
+    if ($DocID > 0){
+      $criteria->addNotInCondition('idDocument',array($DocID));
+    }
+    $criteria->compare("CategoryID",$CategoryID);
+    $criteria->compare("SubmissionIndex",$SubmissionIndex);
+    $criteria->compare("YEAR(SubmissionDate)", date("Y",strtotime($SubmissionDate)));
+    
+    $cat_code = Doccategories::model()->findByPk($CategoryID)->CategoryCode;
+    $model = Documents::model()->find($criteria);
+    $msg = "";
+    
+    if (strlen(trim($cat_code))>0 && $model && $DocID){
+      $msg = "Знайдено документ з такими індексом, роком надходження і категорією: `"
+        .$model->Summary
+        ."`[".$model->_document_submit[0]->SubmissionInfo."]";
+    }
+    if (strlen(trim($cat_code))>0 && $model && !$DocID){
+      $msg = "Попередній документ з такими роком надходження і категорією: `"
+        .$model->Summary
+        ."`[".$model->_document_submit[0]->SubmissionInfo."]";
+    }
+    unset($model);
+    echo CJSON::encode(array('msg' => $msg));
+    return $msg;
   }
   
   /**

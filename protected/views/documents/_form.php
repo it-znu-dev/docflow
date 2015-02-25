@@ -71,6 +71,44 @@ $this->pageTitle=Yii::app()->name;
       });
     });
     
+    var timer = 0;
+    var SubmissionIndexCurrentValue = "";
+
+    var checkInputChange = function(_SubmissionIndex){
+      var SubmissionIndex = _SubmissionIndex;
+      if (SubmissionIndexCurrentValue !== SubmissionIndex){
+        SubmissionIndexCurrentValue = SubmissionIndex;
+        $.ajax({
+          type:"get",
+          url:"<?php echo Yii::app()->CreateUrl("documents/searchIndexAndShowInfo"); ?>",
+          dataType:"json",
+          data: {
+            "DocID":"<?php echo ((!$model->idDocument)? "0": $model->idDocument); ?>",
+            "CategoryID":$("#Documents_CategoryID").val(),
+            "SubmissionDate":$("#Documents_SubmissionDate").val(),
+            "SubmissionIndex":SubmissionIndex,
+            "UserID":(($("#Documents_UserID").length)? $("#Documents_UserID").val():0),
+            "cache" : false
+          },
+          success:function(data){
+              if (data.msg.length){
+                $("#SubmissionIndexMsg").text(data.msg);
+                <?php if($model->idDocument){ ?>
+                $("#SubmissionIndexMsg").removeClass("alert-warning");
+                $("#SubmissionIndexMsg").addClass("alert-danger");
+                <?php } ?>
+              } else {
+                $("#SubmissionIndexMsg").text("Будьте уважні при виборі категорії документа");
+                <?php if($model->idDocument){ ?>
+                $("#SubmissionIndexMsg").removeClass("alert-danger");
+                $("#SubmissionIndexMsg").addClass("alert-warning");
+                <?php } ?>
+              }
+          }
+        });
+      }
+    };
+    
     <?php if ($model->isNewRecord){ ?>
     setInterval(function()
     { 
@@ -86,10 +124,45 @@ $this->pageTitle=Yii::app()->name;
           },
           success:function(data){
               $("#DocumentsSubmissionIndex").val(data.expected_index);
+              if (data.expected_index){
+                SubmissionIndexCurrentValue = "";
+                checkInputChange(data.expected_index-1);
+              }
               console.log(data.expected_index);
           }
         });
     }, 1500);//time in milliseconds 
+    <?php } else { ?>
+            
+      var startTimer = function () {
+      	timer = setInterval(function(){
+          checkInputChange($("#Documents_SubmissionIndex").val());
+        }, 50); // (50 ms)
+      };
+      
+      var endTimer = function () {
+        clearInterval(timer);
+      };
+      
+      $("#Documents_SubmissionIndex").focus(function() {
+        // turn on timer
+        startTimer();
+      }).blur(function() {
+        // turn off timer
+        endTimer();
+        SubmissionIndexCurrentValue = "";
+      });
+      
+      $("#Documents_SubmissionDate").change(function(){
+        SubmissionIndexCurrentValue = "";
+        checkInputChange($("#Documents_SubmissionIndex").val());
+      });
+      $("#Documents_CategoryID").change(function(){
+        SubmissionIndexCurrentValue = "";
+        checkInputChange($("#Documents_SubmissionIndex").val());
+      });
+
+  
     <?php } ?>
   });
 </script>
@@ -116,6 +189,9 @@ $this->pageTitle=Yii::app()->name;
     <?php if(Yii::app()->user->checkAccess('_DocsAdmin') 
       || Yii::app()->user->checkAccess('_DocsExtended')){ ?>
       <div class='row row-nomargins'>
+        <div class="col-xs-12 alert alert-warning" id="SubmissionIndexMsg">
+          Будьте уважні при виборі категорії документа
+        </div>
         <div class="col-xs-12 form-group">
           <?php echo $form->labelEx($model,'Correspondent'); ?>
           <?php echo $form->textField($model,'Correspondent',array(
@@ -140,6 +216,8 @@ $this->pageTitle=Yii::app()->name;
               <label for="Documents_SubmissionIndex">індекс</label>
               <?php echo $form->textField($model,'SubmissionIndex',array(
                   'class' => "form-control",
+                  'data-name' => 'SubmissionIndex',
+                  'autocomplete'=>"off"
               )); ?>
             </div>
             <?php } ?>
