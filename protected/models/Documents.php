@@ -84,10 +84,12 @@ class Documents extends CActiveRecord{
          date("Y",strtotime($this->SubmissionDate))
       && $model_with_same_SubmissionInfo->idDocument != $this->idDocument
       && strlen($model_with_same_SubmissionInfo->_document_doccategory->CategoryCode) > 0){
-      $this->addError('SubmissionIndex','Вже існує документ з таким індексом (кор. зміст: "'
+      
+      $this->addError('SubmissionIndex','Вже існує документ з таким індексом --- кор. зміст: "'
         .$model_with_same_SubmissionInfo->Summary
-        ."\")");
+        ."\"");
       return false;
+      
     }
     if ($this->uploaded_file){
       $fmodel = new Files();
