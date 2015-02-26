@@ -42,6 +42,7 @@
  * @property CUploadedFile $uploaded_file прикріплений файл для збереження
  * @property integer[] $file_ids ідентифікатори файлів
  * @property integer[] $flow_ids ідентифікатори розсилок
+ * @property integer $force_save зберегти, не зважаючи на НЕунікальність індекса
  *
  */
 class Documents extends CActiveRecord{
@@ -55,6 +56,7 @@ class Documents extends CActiveRecord{
   public $file;
   public $file_ids;
   public $flow_ids;
+  public $force_save = 0;
 
   /**
    * @return string the associated database table name
@@ -74,7 +76,7 @@ class Documents extends CActiveRecord{
     } else {
       $this->SubmissionDate = date("Y-m-d");
     }
-    if ($this->idDocument && $this->SubmissionIndex){
+    if ($this->idDocument && $this->SubmissionIndex && !$this->force_save){
       $criteria = new CDbCriteria();
 
       $criteria->addNotInCondition('idDocument',array($this->idDocument));

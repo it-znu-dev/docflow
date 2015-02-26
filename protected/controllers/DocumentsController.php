@@ -210,6 +210,7 @@ class DocumentsController extends Controller {
       if (!strlen($model->SubmissionDate)){
         $model->SubmissionDate = date("d.m.Y");
       }
+      $model->force_save = 1;
       if (!$model->save()){
         $response = array();
         $response['status'] = 'error';

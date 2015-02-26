@@ -128,6 +128,7 @@ class FlowsController extends Controller {
           } else {
             $doc_->ControlMark = $ctr_mark." ".$period;
           }
+          $doc_->force_save = 1;
           if (!$doc_->save()){
             var_dump($doc_->getErrors());exit();
           }
