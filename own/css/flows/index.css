@@ -158,4 +158,8 @@ input.almost-full-width{
   font-family: Verdana;
 }
 
-
+.doc-info-container p {
+  font-family: Verdana;
+  font-size: 12pt;
+  font-style: italic;
+}
