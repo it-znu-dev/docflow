@@ -164,4 +164,33 @@
     </div>
   </div>
 
-
+  <div class="row row-nomargins">
+    <div class="col-md-4 col-xs-12">
+      <div class="dfbox">
+      <h2 style="text-align: center;">Документи з не унікальними індексами</h2>
+      <?php
+      $form = $this->beginWidget('CActiveForm', array(
+         'id' => 'docsWithNotUniqueIndexes-form',
+         'action' => Yii::app()->createUrl("site/docsWithNotUniqueIndexes"),
+         'enableAjaxValidation' => false,
+         'method' => 'GET',
+      ));
+      ?>
+      <div class="row row-nomargins">
+        <div class="col-xs-12">
+          <?php echo CHtml::label('*',
+            'rept1-submit', array(
+            'class' => 'col-xs-12',
+          )); ?>
+          <input type="submit" 
+                 class="form-control btn btn-sm btn-primary col-xs-12" 
+                 id="docsWithNotUniqueIndexes-submit"
+                 value="Показати" />
+        </div>
+      </div>
+      <?php
+      $this->endWidget();
+      ?>
+      </div>
+    </div>
+  </div>

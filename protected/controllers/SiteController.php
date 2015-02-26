@@ -47,7 +47,8 @@ class SiteController extends Controller {
               'reports',
               'doclisttoxls',
               'rept1',
-              'rept2'
+              'rept2',
+              'docsWithNotUniqueIndexes'
             ),
             'users' => array('@'),
         ),
@@ -323,6 +324,87 @@ order by DepartmentName
     $this->render('xls_rept2',array(
       'data'=>$data,
       'year' => $year
+    ));
+  }
+
+  /**
+   * ЗВІТ: документи з НЕ унікальними індексами
+   */
+  public function actionDocsWithNotUniqueIndexes(){
+    $_model = Yii::app()->request->getParam('Documents',array());
+    $model =new Documents();
+    
+    $model->unsetAttributes();
+    if(!empty($_model)){
+      foreach ($_model as $u_attr => $u_val){
+        if (!empty($u_val)){
+          $model->$u_attr = $u_val;
+        }
+      }
+    }
+    if (!$model->UserID){
+      $model->UserID = Yii::app()->user->id;
+    }
+    $criteria = new CDbCriteria();
+    $criteria->addCondition('(
+      t.UserID IN 
+      (select _ud.UserID from user_department _ud where _ud.DepartmentID IN 
+        (select DepartmentID from user_department ud where ud.UserID='.intval($model->UserID).')
+      )
+    )');
+    $criteria->compare('TypeID',$model->TypeID);
+    $criteria->compare('CategoryID',$model->CategoryID);
+    $criteria->compare('t.Visible',$model->Visible);
+    $criteria->compare('t.Created',$model->Created,true);
+    $criteria->compare('DocumentName',$model->DocumentName,true);
+    $criteria->compare('Summary',$model->Summary,true);
+    $criteria->compare('SubmissionIndex',$model->SubmissionIndex);
+    $criteria->compare('SubmissionDate',$model->SubmissionDate,true);
+    $criteria->addCondition("SubmissionIndex in (
+      select ds.SubmissionIndex 
+      from documents ds 
+      where ds.SubmissionIndex=t.SubmissionIndex 
+        and ds.idDocument <> t.idDocument 
+        and YEAR(t.SubmissionDate) = YEAR(ds.SubmissionDate) 
+        and char_length(ds.SubmissionIndex) > 0 
+        and ds.CategoryID = t.CategoryID 
+        and ds.Visible=t.Visible
+        and (
+          ds.UserID IN 
+          (select _ud.UserID from user_department _ud where _ud.DepartmentID IN 
+            (select DepartmentID from user_department ud where ud.UserID=".intval($model->UserID).")
+          ))
+      )");
+    $criteria->order = "t.Visible desc"
+      . ",YEAR(t.SubmissionDate) desc"
+      . ",t.CategoryID desc"
+      . ",t.SubmissionIndex desc"
+      . ",t.SubmissionDate desc";
+    
+    $data = new CActiveDataProvider($model, array(
+      'criteria'=>$criteria,
+        'pagination' => array(
+            'pageSize' => 50,
+        ),
+    ));
+//    $data= Yii::app()->db->createCommand("
+//SELECT SubmissionIndex,cat.CategoryCode,cat.CategoryName,date_format(SubmissionDate,'%d.%m.%Y'),Summary 
+//FROM documents join doccategories cat on cat.idCategory=documents.CategoryID 
+//WHERE  SubmissionIndex in (
+//  select ds.SubmissionIndex 
+//  from documents ds 
+//  where ds.SubmissionIndex=documents.SubmissionIndex 
+//    and ds.idDocument <> documents.idDocument 
+//    and YEAR(documents.SubmissionDate) = YEAR(ds.SubmissionDate) 
+//    and char_length(ds.SubmissionIndex) > 0 
+//    and ds.CategoryID = documents.CategoryID 
+//    and ds.Visible=documents.Visible
+//)
+//ORDER BY Visible desc,YEAR(SubmissionDate) desc,cat.CategoryCode desc,SubmissionIndex desc,SubmissionDate desc
+//")->queryAll();
+    $this->render('docsWithNotUniqueIndexes',array(
+      'data'=>$data,
+      'model' =>$model
     ));
   }
 

@@ -18,3 +18,8 @@ form {
   font-size: 12pt;
   font-family: Verdana;
 }
+
+#SubmissionIndexMsg {
+  color: black !important;
+  font-family: Verdana !important;
+}
