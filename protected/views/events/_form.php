@@ -318,7 +318,7 @@ if ((Yii::app()->user->checkAccess('EventsAdmin') ||
         $this->many2ManyPicker( 
           'Events[invited_ids]', 
           'InvitedComment', 
-          Yii::app()->CreateUrl('flows/getDepartments'),
+          Yii::app()->CreateUrl('events/getDepartments'),
           $model->_event_event_invited, 
           'DeptID',
           "Запрошені",
@@ -331,7 +331,7 @@ if ((Yii::app()->user->checkAccess('EventsAdmin') ||
         $this->many2ManyPicker( 
           'Events[organizer_ids]', 
           'OrganizerComment', 
-          Yii::app()->CreateUrl('flows/getDepartments'),
+          Yii::app()->CreateUrl('events/getDepartments'),
           $model->_event_event_organizer,
           'DeptID',
           "Організатори",

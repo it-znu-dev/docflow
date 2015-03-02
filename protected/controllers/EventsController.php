@@ -40,7 +40,7 @@ class EventsController extends Controller {
         ),
         array('allow', //
             'actions' => array('create', 
-              'xupdate', 'update', 'attachmentrm'),
+              'xupdate', 'update', 'attachmentrm', 'getDepartments'),
             'roles' => array('EventsGeneral', 'EventsAdmin'),
         ),
         array('allow', //
@@ -300,6 +300,33 @@ class EventsController extends Controller {
     .'where EventDate between "'.$date1.'" and "'.$date2.'"'
     .'group by EventDate order by EventDate ASC')->queryAll();
     echo CJSON::encode($list);
+  }
+  
+  /**
+   * Метод для асинх. вибірки підрозділів у віджетах Many2Many
+   * @param string $q параметр для пошуку назви підрозділу
+   * @param string $n_ids JSON-закодований масив ідентифікаторів, які не треба вибирати
+   */
+  public function actionGetDepartments($q=null,$n_ids="[]"){
+    $fields = array();
+    $criteria = new CDbCriteria();
+    $_n_ids = CJSON::decode($n_ids);
+    if ($q == "*"){
+      $q = null;
+    }
+    $criteria->compare('DepartmentName', $q, true);
+    if (!empty($_n_ids)){
+      $criteria->addNotInCondition('idDepartment',$_n_ids);
+    }
+    $criteria->addCondition('isnull(Hidden) or (Hidden = 0)');
+    $criteria->order = 'DepartmentName ASC';
+    foreach (Departments::model()->findAll($criteria) as $model){
+      $fields[] = array(
+        'text' => $model->DepartmentName, 
+        'id' => $model->idDepartment
+      );
+    }
+    echo CJSON::encode($fields);
   }
 
   /**
