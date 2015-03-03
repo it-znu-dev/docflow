@@ -164,13 +164,13 @@ $controller = $this;
         autoUpload: true,
         add: function(e, data) {
           var uploadErrors = [];
-          var acceptFileTypes = /\/.*(pdf|rtf|odt|ods|txt|csv|jpg|gif|png|tiff|tif|bmp|jpeg|doc|docx|xls|xlsx|ppt|pptx|html|htm|js|css|zip|rar|7z|tar|gz)$/i;
+          var acceptFileTypes = /\/.*(pdf|rtf|odt|ods|txt|csv|jpg|gif|png|tiff|tif|bmp|jpeg|doc|docx|xls|xlsx|ppt|pptx|html|htm|js|css|zip|rar|7z|tar|gz|msword)$/i;
           console.log(data.originalFiles[0]['type']);
           console.log(data.originalFiles[0]['size']);
           console.log("<?php echo intval(ini_get('upload_max_filesize')) * 1024 * 1024;  ?>");
           console.log("<?php echo intval(ini_get('post_max_size')) * 1024 * 1024;  ?>");
           if(data.originalFiles[0]['type'].length && !acceptFileTypes.test(data.originalFiles[0]['type'])) {
-              uploadErrors.push('Файл такого типу не дозволено зберігати.');
+              uploadErrors.push('Файл такого типу не дозволено зберігати. ('+data.originalFiles[0]['type']+')');
           }
           if(data.originalFiles[0]['size'] > <?php echo intval(ini_get("post_max_size")) * 1024 * 1024; ?>
             || data.originalFiles[0]['size'] > <?php echo intval(ini_get('upload_max_filesize')) * 1024 * 1024; ?>) {
