@@ -205,7 +205,7 @@ class DeptgroupsController extends Controller {
       $criteria->compare('_department_deptgroups.idDeptGroup',intval($id));
       $criteria->addCondition('idDepartment not in '
         . '(select DepartmentID from user_department ud where ud.UserID='.Yii::app()->user->id.')');
-      $criteria->addCondition('if(t.Hidden is null,1,t.Hidden=0)');
+      $criteria->addCondition('if(t.Hidden is null,1,t.Hidden=0)');//@fix 05.03.2015
       $criteria->group = 't.idDepartment';
       $criteria->order = 't.DepartmentName';
       $criteria->together =true;
