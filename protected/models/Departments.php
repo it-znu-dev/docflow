@@ -45,7 +45,7 @@ class Departments extends CActiveRecord {
       }
       foreach ($this->Groups as $_id){
         if (intval($_id) > 0){
-          $m = new DepartmentDeptGroup();
+          $m = new DepartmentDeptgroup();
           $m->DepartmentID = $this->idDepartment;
           $m->DeptGroupID = $_id;
           $m->save();
