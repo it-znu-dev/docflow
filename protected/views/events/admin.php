@@ -28,6 +28,10 @@
 $controller = $this;
 $this->widget('zii.widgets.grid.CGridView', array(
     'id'=>'events-grid',
+    'template' => '<div class="documents_pager col-xs-9">{pager}</div>'
+    . '<div class="col-xs-3 right-side">{summary}</div><br/>'
+    . '{items}'
+    . '<div class="documents_pager">{pager}</div>',
     'dataProvider'=>$model->search(),
     'filter'=>$model,
     'columns'=>array(
