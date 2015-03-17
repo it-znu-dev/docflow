@@ -165,7 +165,7 @@ class Files extends CActiveRecord {
       array('UserID', 'required'),
       array('UserID, Visible', 'numerical', 'integerOnly'=>true),
       array('FileName, FileLocation', 'length', 'max'=>255),
-      array('FileLocation','unique', 'message' => 'Такий файл вже існує'),
+      //array('FileLocation','unique', 'message' => 'Такий файл вже існує'),
       // The following rule is used by search().
       // @todo Please remove those attributes that should not be searched.
       array('idFile, UserID, Visible, Created, FileName, FileLocation', 'safe', 'on'=>'search'),
