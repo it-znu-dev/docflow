@@ -22,6 +22,11 @@ $bU = Yii::app()->request->baseUrl;
     </script>
     
     <script type="text/javascript">
+      var pagin_locale = function(){
+        var str = $(".dataTables_info").text();
+        str = str.replace(/Showing\s+([0-9]+)\s+to\s+([0-9]+)\s+of\s+([0-9]+)\sentries/,"елементи № $1-$2 , всього: $3");
+        $(".dataTables_info").text(str);
+      };
      $(function(){
       $('form').submit(function(){
         var t = $(this);
@@ -30,6 +35,7 @@ $bU = Yii::app()->request->baseUrl;
           t.find(':submit').attr('disabled',false);
         }, 10000);
       });
+      pagin_locale();
      });
     </script>
     

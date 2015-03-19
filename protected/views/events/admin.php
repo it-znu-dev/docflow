@@ -22,6 +22,11 @@
   <input type="hidden" id="calendarik_in" />
 </div>
 <div class="dfbox">
+<?php if (isset($_GET['Events']['date_search'])){ ?>
+<h2 class="dfbox centered">
+Показ заходів на <?php echo date("d.m.Y",strtotime($_GET['Events']['date_search'])); ?>
+</h2>
+<?php } ?>
 <?php 
 /* @var $model Events */
 /* @var $controller EventsController */
@@ -33,6 +38,9 @@ $this->widget('zii.widgets.grid.CGridView', array(
     . '{items}'
     . '<div class="documents_pager">{pager}</div>',
     'dataProvider'=>$model->search(),
+    'afterAjaxUpdate' => "function(id,data){
+      pagin_locale(); $('h2.dfbox').remove();
+    }",
     'filter'=>$model,
     'columns'=>array(
       array(

@@ -167,7 +167,7 @@ $controller = $this;
     . '{items}'
     . '<div class="documents_pager">{pager}</div>',
     'afterAjaxUpdate' => "function(id,data){
-      beforeUpdate();
+      beforeUpdate(); pagin_locale();
     }",
     'columns' => array(
       array(
