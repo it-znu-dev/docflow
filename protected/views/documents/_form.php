@@ -178,6 +178,7 @@ $this->pageTitle=Yii::app()->name;
       'enableAjaxValidation'=>false,
       'htmlOptions' => array(
         'enctype'=>'multipart/form-data',
+        'class'=>' more-dark',
       ),
     )); 
     

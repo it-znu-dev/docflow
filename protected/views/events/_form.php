@@ -164,6 +164,7 @@ if ((Yii::app()->user->checkAccess('EventsAdmin') ||
         <?php
           echo $eventscreate_form->textField($model,'EventName',array(
             'class' => 'col-xs-12 col-sm-12 form-control', 
+            'maxlength' => '255', 
           ));
         ?>
         </div>
@@ -197,7 +198,8 @@ if ((Yii::app()->user->checkAccess('EventsAdmin') ||
             'class' => 'col-xs-12 col-sm-12 dfheader', 'id'=>"PlaceLabel"
           ));
           echo $eventscreate_form->textArea($model,'Place',array(
-            'class' => 'col-xs-12 col-sm-12 form-control', 
+            'class' => 'col-xs-12 col-sm-12 form-control',
+            'maxlength' => '255', 
           ));
         ?>
         </div>
@@ -219,6 +221,7 @@ if ((Yii::app()->user->checkAccess('EventsAdmin') ||
             ));
             echo $eventscreate_form->textField($model,'Responsible',array(
               'class' => 'col-xs-12 col-sm-12 form-control', 
+              'maxlength' => '255', 
             ));
           ?>
           </div>
@@ -229,6 +232,7 @@ if ((Yii::app()->user->checkAccess('EventsAdmin') ||
             ));
             echo $eventscreate_form->textField($model,'Contacts',array(
               'class' => 'col-xs-12 col-sm-12 form-control', 
+              'maxlength' => '255', 
             ));
           ?>
           </div>
@@ -263,7 +267,7 @@ if ((Yii::app()->user->checkAccess('EventsAdmin') ||
             <div class="row row-nomargins">
             <?php
               echo $eventscreate_form->textField($model,'DateSmartField', 
-                array('class' => 'col-xs-12 col-sm-12 form-control'));
+                array('class' => 'col-xs-12 col-sm-12 form-control','maxlength' => '255'));
             ?>
             </div>
           </div>

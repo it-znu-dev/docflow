@@ -23,3 +23,7 @@ form {
   color: black !important;
   font-family: Verdana !important;
 }
+
+.more-dark {
+  background-color: rgba(190,220,250,0.7);  
+}

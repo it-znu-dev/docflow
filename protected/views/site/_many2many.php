@@ -151,7 +151,7 @@ if (strlen(trim($ajaxGroupUrl)) > 0){
               <span class="input-group-addon" id="basic-addon1-<?php echo $uid; ?>" >
               <span class="glyphicon glyphicon-search"></span>
               </span>
-              <input type="text" id="<?php echo 'search_'.$uid; ?>" class="form-control"  />
+              <input type="text" id="<?php echo 'search_'.$uid; ?>" class="form-control" maxlength="250" />
               <span class="input-group-addon" id="basic-addon2-<?php echo $uid; ?>"
               style="<?php 
                 echo ((Yii::app()->controller->uniqueID == "events")? "":"display:none;"); 
