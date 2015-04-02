@@ -1,6 +1,7 @@
 <?php
 /* @var $this SiteController */
 /* @var $model Users */
+/* @var $stat array */
 $this->pageTitle="Інформація про користувача СЕД";
 ?>
 <script type="text/javascript">
@@ -129,6 +130,59 @@ $this->pageTitle="Інформація про користувача СЕД";
         )
     ));
   ?>
+  </div><!-- dfbox -->
+  </div><!-- bootstrap col -->
+  <div class="col-xs-12 col-sm-6">
+  <div class="dfbox">
+    <table class="detail-view" style="margin-left: 2%; margin-right: 2%; display: table; width: 96%;" id="yw1">
+     <tbody>
+      <tr class="odd"><th>К-сть документів</th>
+        <td>
+          <a href="<?php echo Yii::app()->createUrl("documents/index",array("Documents[UserInfo]" => $model->username)); ?>">
+            <?php echo $stat[0]['docs']; ?>
+          </a>
+        </td>
+      </tr>
+      <tr class="even"><th>К-сть файлів</th>
+        <td>
+          <a href="<?php echo Yii::app()->createUrl("files/index",array("Files[UserInfo]" => $model->username)); ?>">
+            <?php echo $stat[0]['files']; ?>
+          </a>
+        </td>
+      </tr>
+      <tr class="odd"><th>К-сть вхідних розсилок</th>
+        <td>
+          <a href="<?php echo Yii::app()->createUrl("flows/index"); ?>">
+            <?php echo $stat[0]['in_flows']; ?>
+          </a>
+        </td>
+      </tr>
+      <tr class="even"><th>К-сть розсилок без відповіді</th>
+        <td>
+          <a href="<?php echo Yii::app()->createUrl("flows/index",array("Flows[mode]"=>"without_answer")); ?>">
+            <?php echo $stat[0]['flows_wa']; ?>
+          </a>
+        </td>
+      </tr>
+      <tr class="odd"><th>К-сть вихідних розсилок</th>
+        <td>
+          <a href="<?php echo Yii::app()->createUrl("flows/index",array("Flows[mode]"=>"from")); ?>">
+            <?php echo $stat[0]['from_flows']; ?>
+          </a>
+        </td>
+      </tr>
+      <tr class="even"><th>К-сть відповідей</th>
+        <td>
+            <?php echo $stat[0]['answers']; ?>
+        </td>
+      </tr>
+      <tr class="odd"><th>Середня затримка відповіді</th>
+        <td>
+            <?php echo $stat[0]['answers_days_avg']; ?> дн.
+        </td>
+      </tr>
+     </tbody>
+    </table>  
   </div><!-- dfbox -->
   </div><!-- bootstrap col -->
   </div><!-- row -->

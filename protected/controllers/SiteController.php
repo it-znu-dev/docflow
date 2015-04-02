@@ -158,7 +158,8 @@ class SiteController extends Controller {
     }
     $this->layout = '//layouts/main';
     $this->render("userinfo",array(
-      "model" => $model
+      "model" => $model,
+      "stat" => $model->getStat()
     ));
   }
   
