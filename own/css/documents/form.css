@@ -8,6 +8,12 @@ form {
   margin: 0px auto;
 }
 
+input, select, option, textarea {
+  font-weight: bold  !important;
+  font-family: Verdana !important;
+  color: black !important;
+}
+
 #_confirmed {
   width: 16px;
   height: 16px;
