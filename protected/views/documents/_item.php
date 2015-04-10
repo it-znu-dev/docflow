@@ -35,7 +35,6 @@
     </div>
     
     <div class="col-md-3 col-xs-12 col-sm-12 doc-info-container">
-    <?php if(Yii::app()->user->checkAccess('_DocsAdmin')){ ?>
     <ul>
       <li>
       Створено користувачем:
@@ -43,10 +42,11 @@
       <?php echo $model->_document_user->username; ?>
       </u>
       </li><li>
+    <?php if(Yii::app()->user->checkAccess('_DocsAdmin')){ ?>
       <?php $controller->echoInfoContainer($model,'Created',$model->idDocument,'text',
         $model->Created); ?>
+    <?php } else { echo date("d.m.Y H:i:s",strtotime($model->Created)); } ?>
       </li></ul>
-    <?php } ?>
     </div>
   </div>
   
