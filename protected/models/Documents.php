@@ -78,16 +78,16 @@ class Documents extends CActiveRecord{
     }
     if ($this->idDocument && $this->SubmissionIndex && !$this->force_save){
       $criteria = new CDbCriteria();
-
-      $criteria->addNotInCondition('idDocument',array($this->idDocument));
-      $criteria->compare("CategoryID",$this->CategoryID);
-      $criteria->compare("SubmissionIndex",$this->SubmissionIndex);
-      $criteria->compare("YEAR(SubmissionDate)", date("Y",strtotime($this->SubmissionDate)));
-      $criteria->addCondition("(
+      $criteria->compare("t.Visible",1);
+      $criteria->addCondition('t.idDocument <> '.$this->idDocument);
+      $criteria->compare("t.CategoryID",$this->CategoryID);
+      $criteria->compare("t.SubmissionIndex",$this->SubmissionIndex);
+      $criteria->compare("YEAR(t.SubmissionDate)", date("Y",strtotime($this->SubmissionDate)));
+      $criteria->addCondition("
           t.UserID IN 
           (select _ud.UserID from user_department _ud where _ud.DepartmentID IN 
             (select DepartmentID from user_department ud where ud.UserID=".intval($this->UserID).")
-          ))");
+          )");
       $cat_code = Doccategories::model()->findByPk($this->CategoryID)->CategoryCode;
       $model_with_same_SubmissionInfo = Documents::model()->find($criteria);
 

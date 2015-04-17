@@ -419,7 +419,12 @@ class DocumentsController extends Controller {
     $criteria->compare("CategoryID",$CategoryID);
     $criteria->compare("SubmissionIndex",$SubmissionIndex);
     $criteria->compare("YEAR(SubmissionDate)", date("Y",strtotime($SubmissionDate)));
-    
+    $criteria->addCondition("
+        UserID IN 
+        (select _ud.UserID from user_department _ud where _ud.DepartmentID IN 
+          (select DepartmentID from user_department ud where ud.UserID=".intval(Yii::app()->user->id).")
+        )");
+    $criteria->compare("Visible",1);
     $cat_code = Doccategories::model()->findByPk($CategoryID)->CategoryCode;
     $model = Documents::model()->find($criteria);
     $msg = "";

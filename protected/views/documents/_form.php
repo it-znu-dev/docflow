@@ -90,8 +90,9 @@ $this->pageTitle=Yii::app()->name;
             "SubmissionDate":$("#Documents_SubmissionDate").val(),
             "SubmissionIndex":SubmissionIndex,
             "UserID":(($("#Documents_UserID").length)? $("#Documents_UserID").val():0),
-            "cache" : false
+            "__" : Math.random()
           },
+          cache : false,
           success:function(data){
               if (data.msg.length){
                 $("#SubmissionIndexMsg").text(data.msg);
@@ -122,8 +123,9 @@ $this->pageTitle=Yii::app()->name;
             "CategoryID":$("#Documents_CategoryID").val(),
             "SubmissionDate":$("#Documents_SubmissionDate").val(),
             "UserID":(($("#Documents_UserID").length)? $("#Documents_UserID").val():0),
-            "cache" : false
+            "__" : Math.random()
           },
+          "cache" : false,
           success:function(data){
               $("#DocumentsSubmissionIndex").val(data.expected_index);
               if (data.expected_index){
