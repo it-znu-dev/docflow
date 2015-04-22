@@ -115,7 +115,7 @@ return array(
       
       'user' => array(
          'class' => "WebUser", // enable cookie-based authentication
-         'allowAutoLogin' => false,
+         'allowAutoLogin' => true,
       ),
 
       'urlManager' => array(
