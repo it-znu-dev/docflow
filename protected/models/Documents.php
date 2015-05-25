@@ -480,14 +480,14 @@ class Documents extends CActiveRecord{
   }
   
   /**
-   * Повертає усі роки створення документів у вигляді асоц. масиву
+   * Повертає усі роки надходження документів у вигляді асоц. масиву
    * @return array e.g. [''=>'рік','2014'=>'2014', '2015'=>'2015']
    */
   public function getYears(){
-    $data= Yii::app()->db->createCommand('select YEAR(if(Created is not null,Created,CURDATE())) as _year 
+    $data= Yii::app()->db->createCommand('select YEAR(if(SubmissionDate is not null,SubmissionDate,CURDATE())) as _year 
     from documents 
-    group by YEAR(if(Created is not null,Created,CURDATE())) 
-    order by YEAR(if(Created is not null,Created,CURDATE())) DESC')->queryAll();
+    group by YEAR(if(SubmissionDate is not null,SubmissionDate,CURDATE())) 
+    order by YEAR(if(SubmissionDate is not null,SubmissionDate,CURDATE())) DESC')->queryAll();
     $years = array();
     $years[''] = 'рік';
     for ($i = 0; $i < count($data); $i++){
