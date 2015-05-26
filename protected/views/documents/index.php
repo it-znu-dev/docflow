@@ -164,7 +164,7 @@ $controller = $this;
         autoUpload: true,
         add: function(e, data) {
           var uploadErrors = [];
-          var acceptFileTypes = /\/.*(pdf|rtf|odt|ods|txt|csv|jpg|gif|png|tiff|tif|bmp|jpeg|doc|docx|xls|xlsx|ppt|pptx|html|htm|js|css|zip|rar|7z|tar|gz|msword)$/i;
+          var acceptFileTypes = /^.*(pdf|rtf|odt|ods|txt|csv|jpg|gif|png|tiff|tif|bmp|jpeg|doc|docx|xls|xlsx|ppt|pptx|html|htm|js|css|zip|rar|7z|tar|gz|msword|document|xml)/i;
           console.log(data.originalFiles[0]['type']);
           console.log(data.originalFiles[0]['size']);
           console.log("<?php echo intval(ini_get('upload_max_filesize')) * 1024 * 1024;  ?>");
