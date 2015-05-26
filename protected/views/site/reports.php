@@ -193,4 +193,54 @@
       ?>
       </div>
     </div>
+    <div class="col-md-4 col-xs-12 " id="allStat-block">
+      <div class="dfbox">
+      <h2 style="text-align: center;">Загальна статистика надання відповіді загальному відділу</h2>
+      <?php
+      $form = $this->beginWidget('CActiveForm', array(
+         'id' => 'allStat-form',
+         'action' => Yii::app()->createUrl("site/allStat"),
+         'enableAjaxValidation' => false,
+         'method' => 'GET',
+      ));
+      ?>
+      <div class="row row-nomargins">
+          <div class="col-xs-6">
+            <?php echo CHtml::label('Від дати', 'doclisttoxls-date_begin',array(
+              'class' => 'col-xs-12 dfheader',
+            )); ?>
+            <?php
+            echo CHtml::textField('date_begin', "",
+              array('id' => 'doclisttoxls-date_begin',
+               'class' => 'form-control col-xs-12 datepicker'));
+            ?>
+          </div>
+          <div class="col-xs-6">
+            <?php echo CHtml::label('До дати', 'doclisttoxls-date_end',array(
+              'class' => 'col-xs-12 dfheader',
+            )); ?>
+            <?php
+            echo CHtml::textField('date_end', "",
+              array('id' => 'doclisttoxls-date_end',
+               'class' => 'form-control col-xs-12 datepicker'));
+            ?>
+          </div>
+      </div>
+      <div class="row row-nomargins">
+        <div class="col-xs-12">
+          <?php echo CHtml::label('*',
+            'doclisttoxls-submit', array(
+            'class' => 'col-xs-12',
+          )); ?>
+          <input type="submit" 
+                 class="form-control btn btn-sm btn-primary col-xs-12" 
+                 id="doclisttoxls-submit"
+                 value="Показати" />
+        </div>
+      </div>
+      <?php
+      $this->endWidget();
+      ?>
+      </div>
+    </div>
   </div>

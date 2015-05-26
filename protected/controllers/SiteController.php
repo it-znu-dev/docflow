@@ -48,7 +48,8 @@ class SiteController extends Controller {
               'doclisttoxls',
               'rept1',
               'rept2',
-              'docsWithNotUniqueIndexes'
+              'docsWithNotUniqueIndexes',
+              'allStat'
             ),
             'users' => array('@'),
         ),
@@ -406,6 +407,45 @@ order by DepartmentName
     $this->render('docsWithNotUniqueIndexes',array(
       'data'=>$data,
       'model' =>$model
+    ));
+  }
+  
+  /**
+   * Загальна статистика надання відповіді загальному відділу
+   */
+  public function actionAllStat($date_begin,$date_end){
+    //Перетворення дат з формату d.m.Y у формат Y-m-d
+    if ($date_begin) {
+      $t = strtotime(str_replace('.', '-', $date_begin));
+      $date_begin = date('Y-m-d', $t);
+    } else {
+      $date_begin = "2000-01-01";
+    }
+    if ($date_end) {
+      $t = strtotime(str_replace('.', '-', $date_end));
+      $date_end = date('Y-m-d', $t);
+    } else {
+      $date_end = date("Y-m-d");
+    }
+    $sql = 'select 
+      sum(if(fr.AnswerID>0,1,0)) as ans_cnt,
+      sum(if(fr.AnswerID>0,0,1)) as not_ans_cnt,
+      frdp.DepartmentName from 
+       departments dp 
+       left join user_department ud on dp.idDepartment=ud.DepartmentID
+       left join flows fl on fl.UserID = ud.UserID
+       left join flow_respondent fr on fr.FlowID=fl.idFlow
+       left join departments frdp on fr.DeptID=frdp.idDepartment
+    where dp.DepartmentName in("Загальний відділ","Лебедєва Ольга Ігорівна","Романова Наталя Василівна")
+      and fl.Created BETWEEN STR_TO_DATE("'.$date_begin.' 00:00:00","%Y-%m-%d %H:%i:%s") 
+      and STR_TO_DATE("'.$date_end.' 00:00:00","%Y-%m-%d %H:%i:%s") 
+      and frdp.DepartmentName is not null
+    group by fr.DeptID
+    order by frdp.DepartmentName';
+    
+    $data= Yii::app()->db->createCommand($sql)->queryAll();
+    $this->render('allStat',array(
+      'data'=>$data,
     ));
   }
 
