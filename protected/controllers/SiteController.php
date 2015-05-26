@@ -419,7 +419,8 @@ order by DepartmentName
       $t = strtotime(str_replace('.', '-', $date_begin));
       $date_begin = date('Y-m-d', $t);
     } else {
-      $date_begin = "2000-01-01";
+      $result = Yii::app()->db->createCommand("select min(Created) as m_d from flows group by idFlow")->queryAll();
+      $date_begin = $result[0]["m_d"];
     }
     if ($date_end) {
       $t = strtotime(str_replace('.', '-', $date_end));
@@ -446,6 +447,8 @@ order by DepartmentName
     $data= Yii::app()->db->createCommand($sql)->queryAll();
     $this->render('allStat',array(
       'data'=>$data,
+      'date_begin' => $date_begin,
+      'date_end' => $date_end
     ));
   }
 

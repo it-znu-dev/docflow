@@ -1,7 +1,14 @@
 <?php
 /* @var $data array */
+/* @var $date_begin string */
+/* @var $date_end string */
 ?>
 <div class="well well-sm">
+  <h2 class="centered">
+    Загальна статистика надання відповіді загальному відділу
+    (<?php echo date("d.m.Y",strtotime($date_begin))
+      ." - ".date("d.m.Y",strtotime($date_end)); ?>)
+  </h2>
 <table class="table table-bordered table-striped">
   <tr>
     <th>Підрозділ</th>
